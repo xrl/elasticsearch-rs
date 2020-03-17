@@ -48,6 +48,12 @@ impl<'b> MlCloseJobParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlCloseJobParts<'b> {
+    #[doc = "Builds a [MlCloseJobParts::JobId] for the Ml Close Job API"]
+    fn from(t: &'b str) -> MlCloseJobParts<'b> {
+        MlCloseJobParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Close Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-close-job.html)"]
 pub struct MlCloseJob<'a, 'b, B> {
@@ -69,10 +75,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlCloseJob] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlCloseJobParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlCloseJobParts<'b>>,
+    {
         MlCloseJob {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_jobs: None,
             body: None,
@@ -218,6 +227,12 @@ impl<'b> MlDeleteCalendarParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlDeleteCalendarParts<'b> {
+    #[doc = "Builds a [MlDeleteCalendarParts::CalendarId] for the Ml Delete Calendar API"]
+    fn from(t: &'b str) -> MlDeleteCalendarParts<'b> {
+        MlDeleteCalendarParts::CalendarId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Delete Calendar API"]
 pub struct MlDeleteCalendar<'a, 'b> {
@@ -232,10 +247,13 @@ pub struct MlDeleteCalendar<'a, 'b> {
 }
 impl<'a, 'b> MlDeleteCalendar<'a, 'b> {
     #[doc = "Creates a new instance of [MlDeleteCalendar] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlDeleteCalendarParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlDeleteCalendarParts<'b>>,
+    {
         MlDeleteCalendar {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -335,6 +353,12 @@ impl<'b> MlDeleteCalendarEventParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for MlDeleteCalendarEventParts<'b> {
+    #[doc = "Builds a [MlDeleteCalendarEventParts::CalendarIdEventId] for the Ml Delete Calendar Event API"]
+    fn from(t: (&'b str, &'b str)) -> MlDeleteCalendarEventParts<'b> {
+        MlDeleteCalendarEventParts::CalendarIdEventId(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Delete Calendar Event API"]
 pub struct MlDeleteCalendarEvent<'a, 'b> {
@@ -349,10 +373,13 @@ pub struct MlDeleteCalendarEvent<'a, 'b> {
 }
 impl<'a, 'b> MlDeleteCalendarEvent<'a, 'b> {
     #[doc = "Creates a new instance of [MlDeleteCalendarEvent] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlDeleteCalendarEventParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlDeleteCalendarEventParts<'b>>,
+    {
         MlDeleteCalendarEvent {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -452,6 +479,12 @@ impl<'b> MlDeleteCalendarJobParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for MlDeleteCalendarJobParts<'b> {
+    #[doc = "Builds a [MlDeleteCalendarJobParts::CalendarIdJobId] for the Ml Delete Calendar Job API"]
+    fn from(t: (&'b str, &'b str)) -> MlDeleteCalendarJobParts<'b> {
+        MlDeleteCalendarJobParts::CalendarIdJobId(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Delete Calendar Job API"]
 pub struct MlDeleteCalendarJob<'a, 'b> {
@@ -466,10 +499,13 @@ pub struct MlDeleteCalendarJob<'a, 'b> {
 }
 impl<'a, 'b> MlDeleteCalendarJob<'a, 'b> {
     #[doc = "Creates a new instance of [MlDeleteCalendarJob] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlDeleteCalendarJobParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlDeleteCalendarJobParts<'b>>,
+    {
         MlDeleteCalendarJob {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -567,6 +603,12 @@ impl<'b> MlDeleteDatafeedParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlDeleteDatafeedParts<'b> {
+    #[doc = "Builds a [MlDeleteDatafeedParts::DatafeedId] for the Ml Delete Datafeed API"]
+    fn from(t: &'b str) -> MlDeleteDatafeedParts<'b> {
+        MlDeleteDatafeedParts::DatafeedId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Delete Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-delete-datafeed.html)"]
 pub struct MlDeleteDatafeed<'a, 'b> {
@@ -582,10 +624,13 @@ pub struct MlDeleteDatafeed<'a, 'b> {
 }
 impl<'a, 'b> MlDeleteDatafeed<'a, 'b> {
     #[doc = "Creates a new instance of [MlDeleteDatafeed] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlDeleteDatafeedParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlDeleteDatafeedParts<'b>>,
+    {
         MlDeleteDatafeed {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -802,6 +847,12 @@ impl<'b> MlDeleteFilterParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlDeleteFilterParts<'b> {
+    #[doc = "Builds a [MlDeleteFilterParts::FilterId] for the Ml Delete Filter API"]
+    fn from(t: &'b str) -> MlDeleteFilterParts<'b> {
+        MlDeleteFilterParts::FilterId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Delete Filter API"]
 pub struct MlDeleteFilter<'a, 'b> {
@@ -816,10 +867,13 @@ pub struct MlDeleteFilter<'a, 'b> {
 }
 impl<'a, 'b> MlDeleteFilter<'a, 'b> {
     #[doc = "Creates a new instance of [MlDeleteFilter] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlDeleteFilterParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlDeleteFilterParts<'b>>,
+    {
         MlDeleteFilter {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -928,6 +982,18 @@ impl<'b> MlDeleteForecastParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlDeleteForecastParts<'b> {
+    #[doc = "Builds a [MlDeleteForecastParts::JobId] for the Ml Delete Forecast API"]
+    fn from(t: &'b str) -> MlDeleteForecastParts<'b> {
+        MlDeleteForecastParts::JobId(t)
+    }
+}
+impl<'b> From<(&'b str, &'b str)> for MlDeleteForecastParts<'b> {
+    #[doc = "Builds a [MlDeleteForecastParts::JobIdForecastId] for the Ml Delete Forecast API"]
+    fn from(t: (&'b str, &'b str)) -> MlDeleteForecastParts<'b> {
+        MlDeleteForecastParts::JobIdForecastId(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Delete Forecast API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-delete-forecast.html)"]
 pub struct MlDeleteForecast<'a, 'b> {
@@ -944,10 +1010,13 @@ pub struct MlDeleteForecast<'a, 'b> {
 }
 impl<'a, 'b> MlDeleteForecast<'a, 'b> {
     #[doc = "Creates a new instance of [MlDeleteForecast] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlDeleteForecastParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlDeleteForecastParts<'b>>,
+    {
         MlDeleteForecast {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_forecasts: None,
             error_trace: None,
@@ -1063,6 +1132,12 @@ impl<'b> MlDeleteJobParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlDeleteJobParts<'b> {
+    #[doc = "Builds a [MlDeleteJobParts::JobId] for the Ml Delete Job API"]
+    fn from(t: &'b str) -> MlDeleteJobParts<'b> {
+        MlDeleteJobParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Delete Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-delete-job.html)"]
 pub struct MlDeleteJob<'a, 'b> {
@@ -1079,10 +1154,13 @@ pub struct MlDeleteJob<'a, 'b> {
 }
 impl<'a, 'b> MlDeleteJob<'a, 'b> {
     #[doc = "Creates a new instance of [MlDeleteJob] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlDeleteJobParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlDeleteJobParts<'b>>,
+    {
         MlDeleteJob {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -1200,6 +1278,12 @@ impl<'b> MlDeleteModelSnapshotParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for MlDeleteModelSnapshotParts<'b> {
+    #[doc = "Builds a [MlDeleteModelSnapshotParts::JobIdSnapshotId] for the Ml Delete Model Snapshot API"]
+    fn from(t: (&'b str, &'b str)) -> MlDeleteModelSnapshotParts<'b> {
+        MlDeleteModelSnapshotParts::JobIdSnapshotId(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Delete Model Snapshot API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-delete-snapshot.html)"]
 pub struct MlDeleteModelSnapshot<'a, 'b> {
@@ -1214,10 +1298,13 @@ pub struct MlDeleteModelSnapshot<'a, 'b> {
 }
 impl<'a, 'b> MlDeleteModelSnapshot<'a, 'b> {
     #[doc = "Creates a new instance of [MlDeleteModelSnapshot] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlDeleteModelSnapshotParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlDeleteModelSnapshotParts<'b>>,
+    {
         MlDeleteModelSnapshot {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -1316,6 +1403,12 @@ impl<'b> MlFlushJobParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlFlushJobParts<'b> {
+    #[doc = "Builds a [MlFlushJobParts::JobId] for the Ml Flush Job API"]
+    fn from(t: &'b str) -> MlFlushJobParts<'b> {
+        MlFlushJobParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Flush Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-flush-job.html)"]
 pub struct MlFlushJob<'a, 'b, B> {
@@ -1339,10 +1432,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlFlushJob] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlFlushJobParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlFlushJobParts<'b>>,
+    {
         MlFlushJob {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             advance_time: None,
             body: None,
@@ -1509,6 +1605,12 @@ impl<'b> MlForecastParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlForecastParts<'b> {
+    #[doc = "Builds a [MlForecastParts::JobId] for the Ml Forecast API"]
+    fn from(t: &'b str) -> MlForecastParts<'b> {
+        MlForecastParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Forecast API"]
 pub struct MlForecast<'a, 'b, B> {
@@ -1529,10 +1631,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlForecast] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlForecastParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlForecastParts<'b>>,
+    {
         MlForecast {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             duration: None,
@@ -1679,6 +1784,18 @@ impl<'b> MlGetBucketsParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for MlGetBucketsParts<'b> {
+    #[doc = "Builds a [MlGetBucketsParts::JobIdTimestamp] for the Ml Get Buckets API"]
+    fn from(t: (&'b str, &'b str)) -> MlGetBucketsParts<'b> {
+        MlGetBucketsParts::JobIdTimestamp(t.0, t.1)
+    }
+}
+impl<'b> From<&'b str> for MlGetBucketsParts<'b> {
+    #[doc = "Builds a [MlGetBucketsParts::JobId] for the Ml Get Buckets API"]
+    fn from(t: &'b str) -> MlGetBucketsParts<'b> {
+        MlGetBucketsParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Buckets API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-bucket.html)"]
 pub struct MlGetBuckets<'a, 'b, B> {
@@ -1706,10 +1823,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlGetBuckets] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetBucketsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetBucketsParts<'b>>,
+    {
         MlGetBuckets {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             anomaly_score: None,
             body: None,
@@ -1919,6 +2039,12 @@ impl<'b> MlGetCalendarEventsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetCalendarEventsParts<'b> {
+    #[doc = "Builds a [MlGetCalendarEventsParts::CalendarId] for the Ml Get Calendar Events API"]
+    fn from(t: &'b str) -> MlGetCalendarEventsParts<'b> {
+        MlGetCalendarEventsParts::CalendarId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Get Calendar Events API"]
 pub struct MlGetCalendarEvents<'a, 'b> {
@@ -1938,10 +2064,13 @@ pub struct MlGetCalendarEvents<'a, 'b> {
 }
 impl<'a, 'b> MlGetCalendarEvents<'a, 'b> {
     #[doc = "Creates a new instance of [MlGetCalendarEvents] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetCalendarEventsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetCalendarEventsParts<'b>>,
+    {
         MlGetCalendarEvents {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             end: None,
             error_trace: None,
@@ -2087,6 +2216,12 @@ impl<'b> MlGetCalendarsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetCalendarsParts<'b> {
+    #[doc = "Builds a [MlGetCalendarsParts::CalendarId] for the Ml Get Calendars API"]
+    fn from(t: &'b str) -> MlGetCalendarsParts<'b> {
+        MlGetCalendarsParts::CalendarId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Get Calendars API"]
 pub struct MlGetCalendars<'a, 'b, B> {
@@ -2107,10 +2242,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlGetCalendars] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetCalendarsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetCalendarsParts<'b>>,
+    {
         MlGetCalendars {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -2261,6 +2399,18 @@ impl<'b> MlGetCategoriesParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, i64)> for MlGetCategoriesParts<'b> {
+    #[doc = "Builds a [MlGetCategoriesParts::JobIdCategoryId] for the Ml Get Categories API"]
+    fn from(t: (&'b str, i64)) -> MlGetCategoriesParts<'b> {
+        MlGetCategoriesParts::JobIdCategoryId(t.0, t.1)
+    }
+}
+impl<'b> From<&'b str> for MlGetCategoriesParts<'b> {
+    #[doc = "Builds a [MlGetCategoriesParts::JobId] for the Ml Get Categories API"]
+    fn from(t: &'b str) -> MlGetCategoriesParts<'b> {
+        MlGetCategoriesParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Categories API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-category.html)"]
 pub struct MlGetCategories<'a, 'b, B> {
@@ -2281,10 +2431,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlGetCategories] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetCategoriesParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetCategoriesParts<'b>>,
+    {
         MlGetCategories {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -2427,6 +2580,12 @@ impl<'b> MlGetDatafeedStatsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetDatafeedStatsParts<'b> {
+    #[doc = "Builds a [MlGetDatafeedStatsParts::DatafeedId] for the Ml Get Datafeed Stats API"]
+    fn from(t: &'b str) -> MlGetDatafeedStatsParts<'b> {
+        MlGetDatafeedStatsParts::DatafeedId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Datafeed Stats API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-datafeed-stats.html)"]
 pub struct MlGetDatafeedStats<'a, 'b> {
@@ -2442,10 +2601,13 @@ pub struct MlGetDatafeedStats<'a, 'b> {
 }
 impl<'a, 'b> MlGetDatafeedStats<'a, 'b> {
     #[doc = "Creates a new instance of [MlGetDatafeedStats] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetDatafeedStatsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetDatafeedStatsParts<'b>>,
+    {
         MlGetDatafeedStats {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_datafeeds: None,
             error_trace: None,
@@ -2555,6 +2717,12 @@ impl<'b> MlGetDatafeedsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetDatafeedsParts<'b> {
+    #[doc = "Builds a [MlGetDatafeedsParts::DatafeedId] for the Ml Get Datafeeds API"]
+    fn from(t: &'b str) -> MlGetDatafeedsParts<'b> {
+        MlGetDatafeedsParts::DatafeedId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Datafeeds API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-datafeed.html)"]
 pub struct MlGetDatafeeds<'a, 'b> {
@@ -2570,10 +2738,13 @@ pub struct MlGetDatafeeds<'a, 'b> {
 }
 impl<'a, 'b> MlGetDatafeeds<'a, 'b> {
     #[doc = "Creates a new instance of [MlGetDatafeeds] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetDatafeedsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetDatafeedsParts<'b>>,
+    {
         MlGetDatafeeds {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_datafeeds: None,
             error_trace: None,
@@ -2683,6 +2854,12 @@ impl<'b> MlGetFiltersParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetFiltersParts<'b> {
+    #[doc = "Builds a [MlGetFiltersParts::FilterId] for the Ml Get Filters API"]
+    fn from(t: &'b str) -> MlGetFiltersParts<'b> {
+        MlGetFiltersParts::FilterId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Get Filters API"]
 pub struct MlGetFilters<'a, 'b> {
@@ -2699,10 +2876,13 @@ pub struct MlGetFilters<'a, 'b> {
 }
 impl<'a, 'b> MlGetFilters<'a, 'b> {
     #[doc = "Creates a new instance of [MlGetFilters] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetFiltersParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetFiltersParts<'b>>,
+    {
         MlGetFilters {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -2819,6 +2999,12 @@ impl<'b> MlGetInfluencersParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetInfluencersParts<'b> {
+    #[doc = "Builds a [MlGetInfluencersParts::JobId] for the Ml Get Influencers API"]
+    fn from(t: &'b str) -> MlGetInfluencersParts<'b> {
+        MlGetInfluencersParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Influencers API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-influencer.html)"]
 pub struct MlGetInfluencers<'a, 'b, B> {
@@ -2845,10 +3031,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlGetInfluencers] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetInfluencersParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetInfluencersParts<'b>>,
+    {
         MlGetInfluencers {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             desc: None,
@@ -3051,6 +3240,12 @@ impl<'b> MlGetJobStatsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetJobStatsParts<'b> {
+    #[doc = "Builds a [MlGetJobStatsParts::JobId] for the Ml Get Job Stats API"]
+    fn from(t: &'b str) -> MlGetJobStatsParts<'b> {
+        MlGetJobStatsParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Job Stats API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-job-stats.html)"]
 pub struct MlGetJobStats<'a, 'b> {
@@ -3066,10 +3261,13 @@ pub struct MlGetJobStats<'a, 'b> {
 }
 impl<'a, 'b> MlGetJobStats<'a, 'b> {
     #[doc = "Creates a new instance of [MlGetJobStats] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetJobStatsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetJobStatsParts<'b>>,
+    {
         MlGetJobStats {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_jobs: None,
             error_trace: None,
@@ -3179,6 +3377,12 @@ impl<'b> MlGetJobsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetJobsParts<'b> {
+    #[doc = "Builds a [MlGetJobsParts::JobId] for the Ml Get Jobs API"]
+    fn from(t: &'b str) -> MlGetJobsParts<'b> {
+        MlGetJobsParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Jobs API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-job.html)"]
 pub struct MlGetJobs<'a, 'b> {
@@ -3194,10 +3398,13 @@ pub struct MlGetJobs<'a, 'b> {
 }
 impl<'a, 'b> MlGetJobs<'a, 'b> {
     #[doc = "Creates a new instance of [MlGetJobs] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetJobsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetJobsParts<'b>>,
+    {
         MlGetJobs {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_jobs: None,
             error_trace: None,
@@ -3315,6 +3522,18 @@ impl<'b> MlGetModelSnapshotsParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for MlGetModelSnapshotsParts<'b> {
+    #[doc = "Builds a [MlGetModelSnapshotsParts::JobIdSnapshotId] for the Ml Get Model Snapshots API"]
+    fn from(t: (&'b str, &'b str)) -> MlGetModelSnapshotsParts<'b> {
+        MlGetModelSnapshotsParts::JobIdSnapshotId(t.0, t.1)
+    }
+}
+impl<'b> From<&'b str> for MlGetModelSnapshotsParts<'b> {
+    #[doc = "Builds a [MlGetModelSnapshotsParts::JobId] for the Ml Get Model Snapshots API"]
+    fn from(t: &'b str) -> MlGetModelSnapshotsParts<'b> {
+        MlGetModelSnapshotsParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Model Snapshots API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-snapshot.html)"]
 pub struct MlGetModelSnapshots<'a, 'b, B> {
@@ -3339,10 +3558,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlGetModelSnapshots] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetModelSnapshotsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetModelSnapshotsParts<'b>>,
+    {
         MlGetModelSnapshots {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             desc: None,
@@ -3522,6 +3744,12 @@ impl<'b> MlGetOverallBucketsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetOverallBucketsParts<'b> {
+    #[doc = "Builds a [MlGetOverallBucketsParts::JobId] for the Ml Get Overall Buckets API"]
+    fn from(t: &'b str) -> MlGetOverallBucketsParts<'b> {
+        MlGetOverallBucketsParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Overall Buckets API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-overall-buckets.html)"]
 pub struct MlGetOverallBuckets<'a, 'b, B> {
@@ -3547,10 +3775,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlGetOverallBuckets] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetOverallBucketsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetOverallBucketsParts<'b>>,
+    {
         MlGetOverallBuckets {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_jobs: None,
             body: None,
@@ -3740,6 +3971,12 @@ impl<'b> MlGetRecordsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlGetRecordsParts<'b> {
+    #[doc = "Builds a [MlGetRecordsParts::JobId] for the Ml Get Records API"]
+    fn from(t: &'b str) -> MlGetRecordsParts<'b> {
+        MlGetRecordsParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Get Records API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-record.html)"]
 pub struct MlGetRecords<'a, 'b, B> {
@@ -3766,10 +4003,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlGetRecords] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlGetRecordsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlGetRecordsParts<'b>>,
+    {
         MlGetRecords {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             desc: None,
@@ -4078,6 +4318,12 @@ impl<'b> MlOpenJobParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlOpenJobParts<'b> {
+    #[doc = "Builds a [MlOpenJobParts::JobId] for the Ml Open Job API"]
+    fn from(t: &'b str) -> MlOpenJobParts<'b> {
+        MlOpenJobParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Open Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-open-job.html)"]
 pub struct MlOpenJob<'a, 'b, B> {
@@ -4096,10 +4342,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlOpenJob] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlOpenJobParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlOpenJobParts<'b>>,
+    {
         MlOpenJob {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -4216,6 +4465,12 @@ impl<'b> MlPostCalendarEventsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlPostCalendarEventsParts<'b> {
+    #[doc = "Builds a [MlPostCalendarEventsParts::CalendarId] for the Ml Post Calendar Events API"]
+    fn from(t: &'b str) -> MlPostCalendarEventsParts<'b> {
+        MlPostCalendarEventsParts::CalendarId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Post Calendar Events API"]
 pub struct MlPostCalendarEvents<'a, 'b, B> {
@@ -4234,10 +4489,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlPostCalendarEvents] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlPostCalendarEventsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlPostCalendarEventsParts<'b>>,
+    {
         MlPostCalendarEvents {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -4354,6 +4612,12 @@ impl<'b> MlPostDataParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlPostDataParts<'b> {
+    #[doc = "Builds a [MlPostDataParts::JobId] for the Ml Post Data API"]
+    fn from(t: &'b str) -> MlPostDataParts<'b> {
+        MlPostDataParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Post Data API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-post-data.html)"]
 pub struct MlPostData<'a, 'b, B> {
@@ -4374,10 +4638,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlPostData] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlPostDataParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlPostDataParts<'b>>,
+    {
         MlPostData {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -4514,6 +4781,12 @@ impl<'b> MlPreviewDatafeedParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlPreviewDatafeedParts<'b> {
+    #[doc = "Builds a [MlPreviewDatafeedParts::DatafeedId] for the Ml Preview Datafeed API"]
+    fn from(t: &'b str) -> MlPreviewDatafeedParts<'b> {
+        MlPreviewDatafeedParts::DatafeedId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Preview Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-preview-datafeed.html)"]
 pub struct MlPreviewDatafeed<'a, 'b> {
@@ -4528,10 +4801,13 @@ pub struct MlPreviewDatafeed<'a, 'b> {
 }
 impl<'a, 'b> MlPreviewDatafeed<'a, 'b> {
     #[doc = "Creates a new instance of [MlPreviewDatafeed] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlPreviewDatafeedParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlPreviewDatafeedParts<'b>>,
+    {
         MlPreviewDatafeed {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -4629,6 +4905,12 @@ impl<'b> MlPutCalendarParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlPutCalendarParts<'b> {
+    #[doc = "Builds a [MlPutCalendarParts::CalendarId] for the Ml Put Calendar API"]
+    fn from(t: &'b str) -> MlPutCalendarParts<'b> {
+        MlPutCalendarParts::CalendarId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Put Calendar API"]
 pub struct MlPutCalendar<'a, 'b, B> {
@@ -4647,10 +4929,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlPutCalendar] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlPutCalendarParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlPutCalendarParts<'b>>,
+    {
         MlPutCalendar {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -4768,6 +5053,12 @@ impl<'b> MlPutCalendarJobParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for MlPutCalendarJobParts<'b> {
+    #[doc = "Builds a [MlPutCalendarJobParts::CalendarIdJobId] for the Ml Put Calendar Job API"]
+    fn from(t: (&'b str, &'b str)) -> MlPutCalendarJobParts<'b> {
+        MlPutCalendarJobParts::CalendarIdJobId(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Put Calendar Job API"]
 pub struct MlPutCalendarJob<'a, 'b, B> {
@@ -4786,10 +5077,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlPutCalendarJob] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlPutCalendarJobParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlPutCalendarJobParts<'b>>,
+    {
         MlPutCalendarJob {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -4905,6 +5199,12 @@ impl<'b> MlPutDatafeedParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlPutDatafeedParts<'b> {
+    #[doc = "Builds a [MlPutDatafeedParts::DatafeedId] for the Ml Put Datafeed API"]
+    fn from(t: &'b str) -> MlPutDatafeedParts<'b> {
+        MlPutDatafeedParts::DatafeedId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Put Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-put-datafeed.html)"]
 pub struct MlPutDatafeed<'a, 'b, B> {
@@ -4923,10 +5223,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlPutDatafeed] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlPutDatafeedParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlPutDatafeedParts<'b>>,
+    {
         MlPutDatafeed {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -5042,6 +5345,12 @@ impl<'b> MlPutFilterParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlPutFilterParts<'b> {
+    #[doc = "Builds a [MlPutFilterParts::FilterId] for the Ml Put Filter API"]
+    fn from(t: &'b str) -> MlPutFilterParts<'b> {
+        MlPutFilterParts::FilterId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Put Filter API"]
 pub struct MlPutFilter<'a, 'b, B> {
@@ -5060,10 +5369,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlPutFilter] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlPutFilterParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlPutFilterParts<'b>>,
+    {
         MlPutFilter {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -5179,6 +5491,12 @@ impl<'b> MlPutJobParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlPutJobParts<'b> {
+    #[doc = "Builds a [MlPutJobParts::JobId] for the Ml Put Job API"]
+    fn from(t: &'b str) -> MlPutJobParts<'b> {
+        MlPutJobParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Put Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-put-job.html)"]
 pub struct MlPutJob<'a, 'b, B> {
@@ -5197,10 +5515,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlPutJob] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlPutJobParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlPutJobParts<'b>>,
+    {
         MlPutJob {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -5319,6 +5640,12 @@ impl<'b> MlRevertModelSnapshotParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for MlRevertModelSnapshotParts<'b> {
+    #[doc = "Builds a [MlRevertModelSnapshotParts::JobIdSnapshotId] for the Ml Revert Model Snapshot API"]
+    fn from(t: (&'b str, &'b str)) -> MlRevertModelSnapshotParts<'b> {
+        MlRevertModelSnapshotParts::JobIdSnapshotId(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Revert Model Snapshot API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-revert-snapshot.html)"]
 pub struct MlRevertModelSnapshot<'a, 'b, B> {
@@ -5338,10 +5665,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlRevertModelSnapshot] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlRevertModelSnapshotParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlRevertModelSnapshotParts<'b>>,
+    {
         MlRevertModelSnapshot {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             delete_intervening_results: None,
@@ -5622,6 +5952,12 @@ impl<'b> MlStartDatafeedParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlStartDatafeedParts<'b> {
+    #[doc = "Builds a [MlStartDatafeedParts::DatafeedId] for the Ml Start Datafeed API"]
+    fn from(t: &'b str) -> MlStartDatafeedParts<'b> {
+        MlStartDatafeedParts::DatafeedId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Start Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-start-datafeed.html)"]
 pub struct MlStartDatafeed<'a, 'b, B> {
@@ -5643,10 +5979,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlStartDatafeed] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlStartDatafeedParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlStartDatafeedParts<'b>>,
+    {
         MlStartDatafeed {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             end: None,
@@ -5793,6 +6132,12 @@ impl<'b> MlStopDatafeedParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlStopDatafeedParts<'b> {
+    #[doc = "Builds a [MlStopDatafeedParts::DatafeedId] for the Ml Stop Datafeed API"]
+    fn from(t: &'b str) -> MlStopDatafeedParts<'b> {
+        MlStopDatafeedParts::DatafeedId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Stop Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-stop-datafeed.html)"]
 pub struct MlStopDatafeed<'a, 'b, B> {
@@ -5814,10 +6159,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlStopDatafeed] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlStopDatafeedParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlStopDatafeedParts<'b>>,
+    {
         MlStopDatafeed {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_datafeeds: None,
             body: None,
@@ -5964,6 +6312,12 @@ impl<'b> MlUpdateDatafeedParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlUpdateDatafeedParts<'b> {
+    #[doc = "Builds a [MlUpdateDatafeedParts::DatafeedId] for the Ml Update Datafeed API"]
+    fn from(t: &'b str) -> MlUpdateDatafeedParts<'b> {
+        MlUpdateDatafeedParts::DatafeedId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Update Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-update-datafeed.html)"]
 pub struct MlUpdateDatafeed<'a, 'b, B> {
@@ -5982,10 +6336,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlUpdateDatafeed] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlUpdateDatafeedParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlUpdateDatafeedParts<'b>>,
+    {
         MlUpdateDatafeed {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -6102,6 +6459,12 @@ impl<'b> MlUpdateFilterParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlUpdateFilterParts<'b> {
+    #[doc = "Builds a [MlUpdateFilterParts::FilterId] for the Ml Update Filter API"]
+    fn from(t: &'b str) -> MlUpdateFilterParts<'b> {
+        MlUpdateFilterParts::FilterId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the Ml Update Filter API"]
 pub struct MlUpdateFilter<'a, 'b, B> {
@@ -6120,10 +6483,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlUpdateFilter] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlUpdateFilterParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlUpdateFilterParts<'b>>,
+    {
         MlUpdateFilter {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -6240,6 +6606,12 @@ impl<'b> MlUpdateJobParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MlUpdateJobParts<'b> {
+    #[doc = "Builds a [MlUpdateJobParts::JobId] for the Ml Update Job API"]
+    fn from(t: &'b str) -> MlUpdateJobParts<'b> {
+        MlUpdateJobParts::JobId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Update Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-update-job.html)"]
 pub struct MlUpdateJob<'a, 'b, B> {
@@ -6258,10 +6630,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlUpdateJob] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlUpdateJobParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlUpdateJobParts<'b>>,
+    {
         MlUpdateJob {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -6380,6 +6755,12 @@ impl<'b> MlUpdateModelSnapshotParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for MlUpdateModelSnapshotParts<'b> {
+    #[doc = "Builds a [MlUpdateModelSnapshotParts::JobIdSnapshotId] for the Ml Update Model Snapshot API"]
+    fn from(t: (&'b str, &'b str)) -> MlUpdateModelSnapshotParts<'b> {
+        MlUpdateModelSnapshotParts::JobIdSnapshotId(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ml Update Model Snapshot API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-update-snapshot.html)"]
 pub struct MlUpdateModelSnapshot<'a, 'b, B> {
@@ -6398,10 +6779,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MlUpdateModelSnapshot] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MlUpdateModelSnapshotParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MlUpdateModelSnapshotParts<'b>>,
+    {
         MlUpdateModelSnapshot {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -6772,35 +7156,38 @@ impl<'a> Ml<'a> {
         Self { client }
     }
     #[doc = "[Ml Close Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-close-job.html)"]
-    pub fn close_job<'b>(&'a self, parts: MlCloseJobParts<'b>) -> MlCloseJob<'a, 'b, ()> {
+    pub fn close_job<'b, P>(&'a self, parts: P) -> MlCloseJob<'a, 'b, ()>
+    where
+        P: Into<MlCloseJobParts<'b>>,
+    {
         MlCloseJob::new(&self.client, parts)
     }
     #[doc = "Ml Delete Calendar API"]
-    pub fn delete_calendar<'b>(
-        &'a self,
-        parts: MlDeleteCalendarParts<'b>,
-    ) -> MlDeleteCalendar<'a, 'b> {
+    pub fn delete_calendar<'b, P>(&'a self, parts: P) -> MlDeleteCalendar<'a, 'b>
+    where
+        P: Into<MlDeleteCalendarParts<'b>>,
+    {
         MlDeleteCalendar::new(&self.client, parts)
     }
     #[doc = "Ml Delete Calendar Event API"]
-    pub fn delete_calendar_event<'b>(
-        &'a self,
-        parts: MlDeleteCalendarEventParts<'b>,
-    ) -> MlDeleteCalendarEvent<'a, 'b> {
+    pub fn delete_calendar_event<'b, P>(&'a self, parts: P) -> MlDeleteCalendarEvent<'a, 'b>
+    where
+        P: Into<MlDeleteCalendarEventParts<'b>>,
+    {
         MlDeleteCalendarEvent::new(&self.client, parts)
     }
     #[doc = "Ml Delete Calendar Job API"]
-    pub fn delete_calendar_job<'b>(
-        &'a self,
-        parts: MlDeleteCalendarJobParts<'b>,
-    ) -> MlDeleteCalendarJob<'a, 'b> {
+    pub fn delete_calendar_job<'b, P>(&'a self, parts: P) -> MlDeleteCalendarJob<'a, 'b>
+    where
+        P: Into<MlDeleteCalendarJobParts<'b>>,
+    {
         MlDeleteCalendarJob::new(&self.client, parts)
     }
     #[doc = "[Ml Delete Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-delete-datafeed.html)"]
-    pub fn delete_datafeed<'b>(
-        &'a self,
-        parts: MlDeleteDatafeedParts<'b>,
-    ) -> MlDeleteDatafeed<'a, 'b> {
+    pub fn delete_datafeed<'b, P>(&'a self, parts: P) -> MlDeleteDatafeed<'a, 'b>
+    where
+        P: Into<MlDeleteDatafeedParts<'b>>,
+    {
         MlDeleteDatafeed::new(&self.client, parts)
     }
     #[doc = "Ml Delete Expired Data API"]
@@ -6808,106 +7195,136 @@ impl<'a> Ml<'a> {
         MlDeleteExpiredData::new(&self.client)
     }
     #[doc = "Ml Delete Filter API"]
-    pub fn delete_filter<'b>(&'a self, parts: MlDeleteFilterParts<'b>) -> MlDeleteFilter<'a, 'b> {
+    pub fn delete_filter<'b, P>(&'a self, parts: P) -> MlDeleteFilter<'a, 'b>
+    where
+        P: Into<MlDeleteFilterParts<'b>>,
+    {
         MlDeleteFilter::new(&self.client, parts)
     }
     #[doc = "[Ml Delete Forecast API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-delete-forecast.html)"]
-    pub fn delete_forecast<'b>(
-        &'a self,
-        parts: MlDeleteForecastParts<'b>,
-    ) -> MlDeleteForecast<'a, 'b> {
+    pub fn delete_forecast<'b, P>(&'a self, parts: P) -> MlDeleteForecast<'a, 'b>
+    where
+        P: Into<MlDeleteForecastParts<'b>>,
+    {
         MlDeleteForecast::new(&self.client, parts)
     }
     #[doc = "[Ml Delete Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-delete-job.html)"]
-    pub fn delete_job<'b>(&'a self, parts: MlDeleteJobParts<'b>) -> MlDeleteJob<'a, 'b> {
+    pub fn delete_job<'b, P>(&'a self, parts: P) -> MlDeleteJob<'a, 'b>
+    where
+        P: Into<MlDeleteJobParts<'b>>,
+    {
         MlDeleteJob::new(&self.client, parts)
     }
     #[doc = "[Ml Delete Model Snapshot API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-delete-snapshot.html)"]
-    pub fn delete_model_snapshot<'b>(
-        &'a self,
-        parts: MlDeleteModelSnapshotParts<'b>,
-    ) -> MlDeleteModelSnapshot<'a, 'b> {
+    pub fn delete_model_snapshot<'b, P>(&'a self, parts: P) -> MlDeleteModelSnapshot<'a, 'b>
+    where
+        P: Into<MlDeleteModelSnapshotParts<'b>>,
+    {
         MlDeleteModelSnapshot::new(&self.client, parts)
     }
     #[doc = "[Ml Flush Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-flush-job.html)"]
-    pub fn flush_job<'b>(&'a self, parts: MlFlushJobParts<'b>) -> MlFlushJob<'a, 'b, ()> {
+    pub fn flush_job<'b, P>(&'a self, parts: P) -> MlFlushJob<'a, 'b, ()>
+    where
+        P: Into<MlFlushJobParts<'b>>,
+    {
         MlFlushJob::new(&self.client, parts)
     }
     #[doc = "Ml Forecast API"]
-    pub fn forecast<'b>(&'a self, parts: MlForecastParts<'b>) -> MlForecast<'a, 'b, ()> {
+    pub fn forecast<'b, P>(&'a self, parts: P) -> MlForecast<'a, 'b, ()>
+    where
+        P: Into<MlForecastParts<'b>>,
+    {
         MlForecast::new(&self.client, parts)
     }
     #[doc = "[Ml Get Buckets API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-bucket.html)"]
-    pub fn get_buckets<'b>(&'a self, parts: MlGetBucketsParts<'b>) -> MlGetBuckets<'a, 'b, ()> {
+    pub fn get_buckets<'b, P>(&'a self, parts: P) -> MlGetBuckets<'a, 'b, ()>
+    where
+        P: Into<MlGetBucketsParts<'b>>,
+    {
         MlGetBuckets::new(&self.client, parts)
     }
     #[doc = "Ml Get Calendar Events API"]
-    pub fn get_calendar_events<'b>(
-        &'a self,
-        parts: MlGetCalendarEventsParts<'b>,
-    ) -> MlGetCalendarEvents<'a, 'b> {
+    pub fn get_calendar_events<'b, P>(&'a self, parts: P) -> MlGetCalendarEvents<'a, 'b>
+    where
+        P: Into<MlGetCalendarEventsParts<'b>>,
+    {
         MlGetCalendarEvents::new(&self.client, parts)
     }
     #[doc = "Ml Get Calendars API"]
-    pub fn get_calendars<'b>(
-        &'a self,
-        parts: MlGetCalendarsParts<'b>,
-    ) -> MlGetCalendars<'a, 'b, ()> {
+    pub fn get_calendars<'b, P>(&'a self, parts: P) -> MlGetCalendars<'a, 'b, ()>
+    where
+        P: Into<MlGetCalendarsParts<'b>>,
+    {
         MlGetCalendars::new(&self.client, parts)
     }
     #[doc = "[Ml Get Categories API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-category.html)"]
-    pub fn get_categories<'b>(
-        &'a self,
-        parts: MlGetCategoriesParts<'b>,
-    ) -> MlGetCategories<'a, 'b, ()> {
+    pub fn get_categories<'b, P>(&'a self, parts: P) -> MlGetCategories<'a, 'b, ()>
+    where
+        P: Into<MlGetCategoriesParts<'b>>,
+    {
         MlGetCategories::new(&self.client, parts)
     }
     #[doc = "[Ml Get Datafeed Stats API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-datafeed-stats.html)"]
-    pub fn get_datafeed_stats<'b>(
-        &'a self,
-        parts: MlGetDatafeedStatsParts<'b>,
-    ) -> MlGetDatafeedStats<'a, 'b> {
+    pub fn get_datafeed_stats<'b, P>(&'a self, parts: P) -> MlGetDatafeedStats<'a, 'b>
+    where
+        P: Into<MlGetDatafeedStatsParts<'b>>,
+    {
         MlGetDatafeedStats::new(&self.client, parts)
     }
     #[doc = "[Ml Get Datafeeds API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-datafeed.html)"]
-    pub fn get_datafeeds<'b>(&'a self, parts: MlGetDatafeedsParts<'b>) -> MlGetDatafeeds<'a, 'b> {
+    pub fn get_datafeeds<'b, P>(&'a self, parts: P) -> MlGetDatafeeds<'a, 'b>
+    where
+        P: Into<MlGetDatafeedsParts<'b>>,
+    {
         MlGetDatafeeds::new(&self.client, parts)
     }
     #[doc = "Ml Get Filters API"]
-    pub fn get_filters<'b>(&'a self, parts: MlGetFiltersParts<'b>) -> MlGetFilters<'a, 'b> {
+    pub fn get_filters<'b, P>(&'a self, parts: P) -> MlGetFilters<'a, 'b>
+    where
+        P: Into<MlGetFiltersParts<'b>>,
+    {
         MlGetFilters::new(&self.client, parts)
     }
     #[doc = "[Ml Get Influencers API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-influencer.html)"]
-    pub fn get_influencers<'b>(
-        &'a self,
-        parts: MlGetInfluencersParts<'b>,
-    ) -> MlGetInfluencers<'a, 'b, ()> {
+    pub fn get_influencers<'b, P>(&'a self, parts: P) -> MlGetInfluencers<'a, 'b, ()>
+    where
+        P: Into<MlGetInfluencersParts<'b>>,
+    {
         MlGetInfluencers::new(&self.client, parts)
     }
     #[doc = "[Ml Get Job Stats API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-job-stats.html)"]
-    pub fn get_job_stats<'b>(&'a self, parts: MlGetJobStatsParts<'b>) -> MlGetJobStats<'a, 'b> {
+    pub fn get_job_stats<'b, P>(&'a self, parts: P) -> MlGetJobStats<'a, 'b>
+    where
+        P: Into<MlGetJobStatsParts<'b>>,
+    {
         MlGetJobStats::new(&self.client, parts)
     }
     #[doc = "[Ml Get Jobs API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-job.html)"]
-    pub fn get_jobs<'b>(&'a self, parts: MlGetJobsParts<'b>) -> MlGetJobs<'a, 'b> {
+    pub fn get_jobs<'b, P>(&'a self, parts: P) -> MlGetJobs<'a, 'b>
+    where
+        P: Into<MlGetJobsParts<'b>>,
+    {
         MlGetJobs::new(&self.client, parts)
     }
     #[doc = "[Ml Get Model Snapshots API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-snapshot.html)"]
-    pub fn get_model_snapshots<'b>(
-        &'a self,
-        parts: MlGetModelSnapshotsParts<'b>,
-    ) -> MlGetModelSnapshots<'a, 'b, ()> {
+    pub fn get_model_snapshots<'b, P>(&'a self, parts: P) -> MlGetModelSnapshots<'a, 'b, ()>
+    where
+        P: Into<MlGetModelSnapshotsParts<'b>>,
+    {
         MlGetModelSnapshots::new(&self.client, parts)
     }
     #[doc = "[Ml Get Overall Buckets API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-overall-buckets.html)"]
-    pub fn get_overall_buckets<'b>(
-        &'a self,
-        parts: MlGetOverallBucketsParts<'b>,
-    ) -> MlGetOverallBuckets<'a, 'b, ()> {
+    pub fn get_overall_buckets<'b, P>(&'a self, parts: P) -> MlGetOverallBuckets<'a, 'b, ()>
+    where
+        P: Into<MlGetOverallBucketsParts<'b>>,
+    {
         MlGetOverallBuckets::new(&self.client, parts)
     }
     #[doc = "[Ml Get Records API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-get-record.html)"]
-    pub fn get_records<'b>(&'a self, parts: MlGetRecordsParts<'b>) -> MlGetRecords<'a, 'b, ()> {
+    pub fn get_records<'b, P>(&'a self, parts: P) -> MlGetRecords<'a, 'b, ()>
+    where
+        P: Into<MlGetRecordsParts<'b>>,
+    {
         MlGetRecords::new(&self.client, parts)
     }
     #[doc = "Ml Info API"]
@@ -6915,55 +7332,73 @@ impl<'a> Ml<'a> {
         MlInfo::new(&self.client)
     }
     #[doc = "[Ml Open Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-open-job.html)"]
-    pub fn open_job<'b>(&'a self, parts: MlOpenJobParts<'b>) -> MlOpenJob<'a, 'b, ()> {
+    pub fn open_job<'b, P>(&'a self, parts: P) -> MlOpenJob<'a, 'b, ()>
+    where
+        P: Into<MlOpenJobParts<'b>>,
+    {
         MlOpenJob::new(&self.client, parts)
     }
     #[doc = "Ml Post Calendar Events API"]
-    pub fn post_calendar_events<'b>(
-        &'a self,
-        parts: MlPostCalendarEventsParts<'b>,
-    ) -> MlPostCalendarEvents<'a, 'b, ()> {
+    pub fn post_calendar_events<'b, P>(&'a self, parts: P) -> MlPostCalendarEvents<'a, 'b, ()>
+    where
+        P: Into<MlPostCalendarEventsParts<'b>>,
+    {
         MlPostCalendarEvents::new(&self.client, parts)
     }
     #[doc = "[Ml Post Data API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-post-data.html)"]
-    pub fn post_data<'b>(&'a self, parts: MlPostDataParts<'b>) -> MlPostData<'a, 'b, ()> {
+    pub fn post_data<'b, P>(&'a self, parts: P) -> MlPostData<'a, 'b, ()>
+    where
+        P: Into<MlPostDataParts<'b>>,
+    {
         MlPostData::new(&self.client, parts)
     }
     #[doc = "[Ml Preview Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-preview-datafeed.html)"]
-    pub fn preview_datafeed<'b>(
-        &'a self,
-        parts: MlPreviewDatafeedParts<'b>,
-    ) -> MlPreviewDatafeed<'a, 'b> {
+    pub fn preview_datafeed<'b, P>(&'a self, parts: P) -> MlPreviewDatafeed<'a, 'b>
+    where
+        P: Into<MlPreviewDatafeedParts<'b>>,
+    {
         MlPreviewDatafeed::new(&self.client, parts)
     }
     #[doc = "Ml Put Calendar API"]
-    pub fn put_calendar<'b>(&'a self, parts: MlPutCalendarParts<'b>) -> MlPutCalendar<'a, 'b, ()> {
+    pub fn put_calendar<'b, P>(&'a self, parts: P) -> MlPutCalendar<'a, 'b, ()>
+    where
+        P: Into<MlPutCalendarParts<'b>>,
+    {
         MlPutCalendar::new(&self.client, parts)
     }
     #[doc = "Ml Put Calendar Job API"]
-    pub fn put_calendar_job<'b>(
-        &'a self,
-        parts: MlPutCalendarJobParts<'b>,
-    ) -> MlPutCalendarJob<'a, 'b, ()> {
+    pub fn put_calendar_job<'b, P>(&'a self, parts: P) -> MlPutCalendarJob<'a, 'b, ()>
+    where
+        P: Into<MlPutCalendarJobParts<'b>>,
+    {
         MlPutCalendarJob::new(&self.client, parts)
     }
     #[doc = "[Ml Put Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-put-datafeed.html)"]
-    pub fn put_datafeed<'b>(&'a self, parts: MlPutDatafeedParts<'b>) -> MlPutDatafeed<'a, 'b, ()> {
+    pub fn put_datafeed<'b, P>(&'a self, parts: P) -> MlPutDatafeed<'a, 'b, ()>
+    where
+        P: Into<MlPutDatafeedParts<'b>>,
+    {
         MlPutDatafeed::new(&self.client, parts)
     }
     #[doc = "Ml Put Filter API"]
-    pub fn put_filter<'b>(&'a self, parts: MlPutFilterParts<'b>) -> MlPutFilter<'a, 'b, ()> {
+    pub fn put_filter<'b, P>(&'a self, parts: P) -> MlPutFilter<'a, 'b, ()>
+    where
+        P: Into<MlPutFilterParts<'b>>,
+    {
         MlPutFilter::new(&self.client, parts)
     }
     #[doc = "[Ml Put Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-put-job.html)"]
-    pub fn put_job<'b>(&'a self, parts: MlPutJobParts<'b>) -> MlPutJob<'a, 'b, ()> {
+    pub fn put_job<'b, P>(&'a self, parts: P) -> MlPutJob<'a, 'b, ()>
+    where
+        P: Into<MlPutJobParts<'b>>,
+    {
         MlPutJob::new(&self.client, parts)
     }
     #[doc = "[Ml Revert Model Snapshot API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-revert-snapshot.html)"]
-    pub fn revert_model_snapshot<'b>(
-        &'a self,
-        parts: MlRevertModelSnapshotParts<'b>,
-    ) -> MlRevertModelSnapshot<'a, 'b, ()> {
+    pub fn revert_model_snapshot<'b, P>(&'a self, parts: P) -> MlRevertModelSnapshot<'a, 'b, ()>
+    where
+        P: Into<MlRevertModelSnapshotParts<'b>>,
+    {
         MlRevertModelSnapshot::new(&self.client, parts)
     }
     #[doc = "[Ml Set Upgrade Mode API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-set-upgrade-mode.html)"]
@@ -6971,42 +7406,45 @@ impl<'a> Ml<'a> {
         MlSetUpgradeMode::new(&self.client)
     }
     #[doc = "[Ml Start Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-start-datafeed.html)"]
-    pub fn start_datafeed<'b>(
-        &'a self,
-        parts: MlStartDatafeedParts<'b>,
-    ) -> MlStartDatafeed<'a, 'b, ()> {
+    pub fn start_datafeed<'b, P>(&'a self, parts: P) -> MlStartDatafeed<'a, 'b, ()>
+    where
+        P: Into<MlStartDatafeedParts<'b>>,
+    {
         MlStartDatafeed::new(&self.client, parts)
     }
     #[doc = "[Ml Stop Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-stop-datafeed.html)"]
-    pub fn stop_datafeed<'b>(
-        &'a self,
-        parts: MlStopDatafeedParts<'b>,
-    ) -> MlStopDatafeed<'a, 'b, ()> {
+    pub fn stop_datafeed<'b, P>(&'a self, parts: P) -> MlStopDatafeed<'a, 'b, ()>
+    where
+        P: Into<MlStopDatafeedParts<'b>>,
+    {
         MlStopDatafeed::new(&self.client, parts)
     }
     #[doc = "[Ml Update Datafeed API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-update-datafeed.html)"]
-    pub fn update_datafeed<'b>(
-        &'a self,
-        parts: MlUpdateDatafeedParts<'b>,
-    ) -> MlUpdateDatafeed<'a, 'b, ()> {
+    pub fn update_datafeed<'b, P>(&'a self, parts: P) -> MlUpdateDatafeed<'a, 'b, ()>
+    where
+        P: Into<MlUpdateDatafeedParts<'b>>,
+    {
         MlUpdateDatafeed::new(&self.client, parts)
     }
     #[doc = "Ml Update Filter API"]
-    pub fn update_filter<'b>(
-        &'a self,
-        parts: MlUpdateFilterParts<'b>,
-    ) -> MlUpdateFilter<'a, 'b, ()> {
+    pub fn update_filter<'b, P>(&'a self, parts: P) -> MlUpdateFilter<'a, 'b, ()>
+    where
+        P: Into<MlUpdateFilterParts<'b>>,
+    {
         MlUpdateFilter::new(&self.client, parts)
     }
     #[doc = "[Ml Update Job API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-update-job.html)"]
-    pub fn update_job<'b>(&'a self, parts: MlUpdateJobParts<'b>) -> MlUpdateJob<'a, 'b, ()> {
+    pub fn update_job<'b, P>(&'a self, parts: P) -> MlUpdateJob<'a, 'b, ()>
+    where
+        P: Into<MlUpdateJobParts<'b>>,
+    {
         MlUpdateJob::new(&self.client, parts)
     }
     #[doc = "[Ml Update Model Snapshot API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/ml-update-snapshot.html)"]
-    pub fn update_model_snapshot<'b>(
-        &'a self,
-        parts: MlUpdateModelSnapshotParts<'b>,
-    ) -> MlUpdateModelSnapshot<'a, 'b, ()> {
+    pub fn update_model_snapshot<'b, P>(&'a self, parts: P) -> MlUpdateModelSnapshot<'a, 'b, ()>
+    where
+        P: Into<MlUpdateModelSnapshotParts<'b>>,
+    {
         MlUpdateModelSnapshot::new(&self.client, parts)
     }
     #[doc = "Ml Validate API"]

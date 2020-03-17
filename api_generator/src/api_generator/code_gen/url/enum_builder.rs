@@ -18,6 +18,7 @@
 use crate::api_generator::code_gen::url::url_builder::{IntoExpr, UrlBuilder};
 use crate::api_generator::{code_gen::*, ApiEndpoint, Path};
 use inflector::Inflector;
+use std::collections::HashSet;
 
 /// Builder for request url parts enum
 ///
@@ -168,7 +169,7 @@ impl<'a> EnumBuilder<'a> {
     }
 
     /// Build this enum and return ASTs for its type, struct declaration and impl
-    pub fn build(self) -> (syn::Ty, syn::Item, syn::Item) {
+    pub fn build(self) -> (syn::Ty, syn::Item, syn::Item, Vec<syn::Item>) {
         let variants = match self.variants.len() {
             0 => vec![Self::parts_none()],
             _ => self.variants,
@@ -201,6 +202,7 @@ impl<'a> EnumBuilder<'a> {
                     body: Box::new(body),
                 });
             }
+
             let match_expr: syn::Expr =
                 syn::ExprKind::Match(Box::new(path_none("self").into_expr()), arms).into();
 
@@ -247,6 +249,114 @@ impl<'a> EnumBuilder<'a> {
             }
         };
 
+        let from_impls = {
+            let mut from_impls = Vec::new();
+
+            // some APIs have more than one variant that accepts the same
+            // tuple struct of argument values. Emit a From<T> impl only for the
+            // first one seen.
+            let mut seen_tys = HashSet::new();
+
+            for (variant, &path) in variants.iter().zip(self.paths.iter()) {
+                let tys: Vec<syn::Ty> = path.path
+                    .params()
+                    .iter()
+                    .map(|&p| {
+                        let ty = path.parts[p].ty;
+                        typekind_to_ty(p, ty, true)
+                    })
+                    .collect();
+
+
+                if tys.len() > 0 && seen_tys.insert(tys.clone()) {
+                    let enum_ident = &self.ident;
+                    let variant_ident = &variant.ident;
+
+                    let (fn_decl, stmt, path) = {
+                        let (input_ty, stmt, from) = match tys.len() {
+                            1 => {
+                                let ty= &tys[0];
+                                (
+                                    ty.clone(),
+                                    quote!(#enum_ident::#variant_ident(t)),
+                                    quote!(From<#ty>)
+                                )
+                            },
+                            n => {
+                                let input_ty = syn::Ty::Tup(tys.clone());
+                                let tuple_destr = {
+                                    let mut idents = Vec::with_capacity(n);
+                                    for i in 0..n {
+                                        idents.push(ident(format!("t.{}", i)))
+                                    }
+                                    idents
+                                };
+
+                                (
+                                    input_ty,
+                                    quote!(#enum_ident::#variant_ident(#(#tuple_destr),*)),
+                                    quote!(From<(#(#tys),*)>)
+                                )
+                            }
+                        };
+
+                        (
+                            syn::FnDecl {
+                                inputs: vec![syn::FnArg::Captured(syn::Pat::Path(None, path_none("t")), input_ty)],
+                                output: syn::FunctionRetTy::Ty(enum_ty.clone()),
+                                variadic: false,
+                            },
+                            syn::parse_expr(stmt.to_string().as_str()).unwrap().into_stmt(),
+                            Some(syn::parse_path(from.to_string().as_str()).unwrap())
+                        )
+                    };
+
+                    let item = syn::ImplItem {
+                        ident: ident("from"),
+                        vis: syn::Visibility::Inherited,
+                        defaultness: syn::Defaultness::Final,
+                        attrs: vec![doc(format!(
+                            "Builds a [{}::{}] for the {} API",
+                            enum_ident,
+                            variant_ident,
+                            self.api_name
+                        ))],
+                        node: syn::ImplItemKind::Method(
+                            syn::MethodSig {
+                                unsafety: syn::Unsafety::Normal,
+                                constness: syn::Constness::NotConst,
+                                abi: None,
+                                decl: fn_decl,
+                                generics: generics_none(),
+                            },
+                            syn::Block {
+                                stmts: vec![stmt],
+                            },
+                        ),
+                    };
+
+                    let item = syn::Item {
+                        ident: ident(""),
+                        vis: syn::Visibility::Inherited,
+                        attrs: vec![],
+                        node: syn::ItemKind::Impl(
+                            syn::Unsafety::Normal,
+                            syn::ImplPolarity::Positive,
+                            generics.clone(),
+                            path,
+                            Box::new(enum_ty.clone()),
+                            vec![item],
+                        ),
+                    };
+
+                    from_impls.push(item);
+                }
+
+            }
+
+            from_impls
+        };
+
         let enum_decl = syn::Item {
             ident: self.ident,
             vis: syn::Visibility::Public,
@@ -268,7 +378,7 @@ impl<'a> EnumBuilder<'a> {
             node: syn::ItemKind::Enum(variants, generics),
         };
 
-        (enum_ty, enum_decl, enum_impl)
+        (enum_ty, enum_decl, enum_impl, from_impls)
     }
 }
 
@@ -361,7 +471,7 @@ mod tests {
             },
         );
 
-        let (enum_ty, enum_decl, enum_impl) = EnumBuilder::from(&endpoint).build();
+        let (enum_ty, enum_decl, enum_impl, _) = EnumBuilder::from(&endpoint).build();
 
         assert_eq!(ty_b("SearchParts"), enum_ty);
 

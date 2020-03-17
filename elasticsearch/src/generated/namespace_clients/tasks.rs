@@ -51,6 +51,12 @@ impl<'b> TasksCancelParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for TasksCancelParts<'b> {
+    #[doc = "Builds a [TasksCancelParts::TaskId] for the Tasks Cancel API"]
+    fn from(t: &'b str) -> TasksCancelParts<'b> {
+        TasksCancelParts::TaskId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Tasks Cancel API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/tasks.html)\n\nCancels a task, if it can be cancelled through an API."]
 pub struct TasksCancel<'a, 'b, B> {
@@ -72,10 +78,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [TasksCancel] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: TasksCancelParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<TasksCancelParts<'b>>,
+    {
         TasksCancel {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             actions: None,
             body: None,
@@ -224,6 +233,12 @@ impl<'b> TasksGetParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for TasksGetParts<'b> {
+    #[doc = "Builds a [TasksGetParts::TaskId] for the Tasks Get API"]
+    fn from(t: &'b str) -> TasksGetParts<'b> {
+        TasksGetParts::TaskId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Tasks Get API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/tasks.html)\n\nReturns information about a task."]
 pub struct TasksGet<'a, 'b> {
@@ -240,10 +255,13 @@ pub struct TasksGet<'a, 'b> {
 }
 impl<'a, 'b> TasksGet<'a, 'b> {
     #[doc = "Creates a new instance of [TasksGet] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: TasksGetParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<TasksGetParts<'b>>,
+    {
         TasksGet {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -533,11 +551,17 @@ impl<'a> Tasks<'a> {
         Self { client }
     }
     #[doc = "[Tasks Cancel API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/tasks.html)\n\nCancels a task, if it can be cancelled through an API."]
-    pub fn cancel<'b>(&'a self, parts: TasksCancelParts<'b>) -> TasksCancel<'a, 'b, ()> {
+    pub fn cancel<'b, P>(&'a self, parts: P) -> TasksCancel<'a, 'b, ()>
+    where
+        P: Into<TasksCancelParts<'b>>,
+    {
         TasksCancel::new(&self.client, parts)
     }
     #[doc = "[Tasks Get API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/tasks.html)\n\nReturns information about a task."]
-    pub fn get<'b>(&'a self, parts: TasksGetParts<'b>) -> TasksGet<'a, 'b> {
+    pub fn get<'b, P>(&'a self, parts: P) -> TasksGet<'a, 'b>
+    where
+        P: Into<TasksGetParts<'b>>,
+    {
         TasksGet::new(&self.client, parts)
     }
     #[doc = "[Tasks List API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/tasks.html)\n\nReturns a list of tasks."]

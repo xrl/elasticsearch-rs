@@ -47,6 +47,12 @@ impl<'b> SlmDeleteLifecycleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for SlmDeleteLifecycleParts<'b> {
+    #[doc = "Builds a [SlmDeleteLifecycleParts::PolicyId] for the Slm Delete Lifecycle API"]
+    fn from(t: &'b str) -> SlmDeleteLifecycleParts<'b> {
+        SlmDeleteLifecycleParts::PolicyId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Slm Delete Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-delete-policy.html)"]
 pub struct SlmDeleteLifecycle<'a, 'b> {
@@ -61,10 +67,13 @@ pub struct SlmDeleteLifecycle<'a, 'b> {
 }
 impl<'a, 'b> SlmDeleteLifecycle<'a, 'b> {
     #[doc = "Creates a new instance of [SlmDeleteLifecycle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: SlmDeleteLifecycleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<SlmDeleteLifecycleParts<'b>>,
+    {
         SlmDeleteLifecycle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -163,6 +172,12 @@ impl<'b> SlmExecuteLifecycleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for SlmExecuteLifecycleParts<'b> {
+    #[doc = "Builds a [SlmExecuteLifecycleParts::PolicyId] for the Slm Execute Lifecycle API"]
+    fn from(t: &'b str) -> SlmExecuteLifecycleParts<'b> {
+        SlmExecuteLifecycleParts::PolicyId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Slm Execute Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-execute-lifecycle.html)"]
 pub struct SlmExecuteLifecycle<'a, 'b, B> {
@@ -181,10 +196,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [SlmExecuteLifecycle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: SlmExecuteLifecycleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<SlmExecuteLifecycleParts<'b>>,
+    {
         SlmExecuteLifecycle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -436,6 +454,12 @@ impl<'b> SlmGetLifecycleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for SlmGetLifecycleParts<'b> {
+    #[doc = "Builds a [SlmGetLifecycleParts::PolicyId] for the Slm Get Lifecycle API"]
+    fn from(t: &'b [&'b str]) -> SlmGetLifecycleParts<'b> {
+        SlmGetLifecycleParts::PolicyId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Slm Get Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-get-policy.html)"]
 pub struct SlmGetLifecycle<'a, 'b> {
@@ -450,10 +474,13 @@ pub struct SlmGetLifecycle<'a, 'b> {
 }
 impl<'a, 'b> SlmGetLifecycle<'a, 'b> {
     #[doc = "Creates a new instance of [SlmGetLifecycle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: SlmGetLifecycleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<SlmGetLifecycleParts<'b>>,
+    {
         SlmGetLifecycle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -771,6 +798,12 @@ impl<'b> SlmPutLifecycleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for SlmPutLifecycleParts<'b> {
+    #[doc = "Builds a [SlmPutLifecycleParts::PolicyId] for the Slm Put Lifecycle API"]
+    fn from(t: &'b str) -> SlmPutLifecycleParts<'b> {
+        SlmPutLifecycleParts::PolicyId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Slm Put Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-put-policy.html)"]
 pub struct SlmPutLifecycle<'a, 'b, B> {
@@ -789,10 +822,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [SlmPutLifecycle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: SlmPutLifecycleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<SlmPutLifecycleParts<'b>>,
+    {
         SlmPutLifecycle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -1163,17 +1199,17 @@ impl<'a> Slm<'a> {
         Self { client }
     }
     #[doc = "[Slm Delete Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-delete-policy.html)"]
-    pub fn delete_lifecycle<'b>(
-        &'a self,
-        parts: SlmDeleteLifecycleParts<'b>,
-    ) -> SlmDeleteLifecycle<'a, 'b> {
+    pub fn delete_lifecycle<'b, P>(&'a self, parts: P) -> SlmDeleteLifecycle<'a, 'b>
+    where
+        P: Into<SlmDeleteLifecycleParts<'b>>,
+    {
         SlmDeleteLifecycle::new(&self.client, parts)
     }
     #[doc = "[Slm Execute Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-execute-lifecycle.html)"]
-    pub fn execute_lifecycle<'b>(
-        &'a self,
-        parts: SlmExecuteLifecycleParts<'b>,
-    ) -> SlmExecuteLifecycle<'a, 'b, ()> {
+    pub fn execute_lifecycle<'b, P>(&'a self, parts: P) -> SlmExecuteLifecycle<'a, 'b, ()>
+    where
+        P: Into<SlmExecuteLifecycleParts<'b>>,
+    {
         SlmExecuteLifecycle::new(&self.client, parts)
     }
     #[doc = "[Slm Execute Retention API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-execute-retention.html)"]
@@ -1181,7 +1217,10 @@ impl<'a> Slm<'a> {
         SlmExecuteRetention::new(&self.client)
     }
     #[doc = "[Slm Get Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-get-policy.html)"]
-    pub fn get_lifecycle<'b>(&'a self, parts: SlmGetLifecycleParts<'b>) -> SlmGetLifecycle<'a, 'b> {
+    pub fn get_lifecycle<'b, P>(&'a self, parts: P) -> SlmGetLifecycle<'a, 'b>
+    where
+        P: Into<SlmGetLifecycleParts<'b>>,
+    {
         SlmGetLifecycle::new(&self.client, parts)
     }
     #[doc = "[Slm Get Stats API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-get-stats.html)"]
@@ -1193,10 +1232,10 @@ impl<'a> Slm<'a> {
         SlmGetStatus::new(&self.client)
     }
     #[doc = "[Slm Put Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-put-policy.html)"]
-    pub fn put_lifecycle<'b>(
-        &'a self,
-        parts: SlmPutLifecycleParts<'b>,
-    ) -> SlmPutLifecycle<'a, 'b, ()> {
+    pub fn put_lifecycle<'b, P>(&'a self, parts: P) -> SlmPutLifecycle<'a, 'b, ()>
+    where
+        P: Into<SlmPutLifecycleParts<'b>>,
+    {
         SlmPutLifecycle::new(&self.client, parts)
     }
     #[doc = "[Slm Start API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/slm-api-start.html)"]

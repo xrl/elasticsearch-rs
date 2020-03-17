@@ -95,9 +95,9 @@ pub trait GetPath {
 
 impl GetPath for syn::Ty {
     fn get_path(&self) -> &syn::Path {
-        match *self {
+        match self {
             syn::Ty::Path(_, ref p) => &p,
-            _ => panic!("Only path types are supported."),
+            t => panic!(format!("Only path types are supported, but given {:?}", t)),
         }
     }
 }

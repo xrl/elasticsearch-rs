@@ -51,6 +51,12 @@ impl<'b> MigrationDeprecationsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MigrationDeprecationsParts<'b> {
+    #[doc = "Builds a [MigrationDeprecationsParts::Index] for the Migration Deprecations API"]
+    fn from(t: &'b str) -> MigrationDeprecationsParts<'b> {
+        MigrationDeprecationsParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Migration Deprecations API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/migration-api-deprecation.html)"]
 pub struct MigrationDeprecations<'a, 'b> {
@@ -65,10 +71,13 @@ pub struct MigrationDeprecations<'a, 'b> {
 }
 impl<'a, 'b> MigrationDeprecations<'a, 'b> {
     #[doc = "Creates a new instance of [MigrationDeprecations] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MigrationDeprecationsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MigrationDeprecationsParts<'b>>,
+    {
         MigrationDeprecations {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -157,10 +166,10 @@ impl<'a> Migration<'a> {
         Self { client }
     }
     #[doc = "[Migration Deprecations API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6/migration-api-deprecation.html)"]
-    pub fn deprecations<'b>(
-        &'a self,
-        parts: MigrationDeprecationsParts<'b>,
-    ) -> MigrationDeprecations<'a, 'b> {
+    pub fn deprecations<'b, P>(&'a self, parts: P) -> MigrationDeprecations<'a, 'b>
+    where
+        P: Into<MigrationDeprecationsParts<'b>>,
+    {
         MigrationDeprecations::new(&self.client, parts)
     }
 }

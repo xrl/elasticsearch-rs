@@ -47,6 +47,12 @@ impl<'b> CcrDeleteAutoFollowPatternParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrDeleteAutoFollowPatternParts<'b> {
+    #[doc = "Builds a [CcrDeleteAutoFollowPatternParts::Name] for the Ccr Delete Auto Follow Pattern API"]
+    fn from(t: &'b str) -> CcrDeleteAutoFollowPatternParts<'b> {
+        CcrDeleteAutoFollowPatternParts::Name(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Delete Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-delete-auto-follow-pattern.html)"]
 pub struct CcrDeleteAutoFollowPattern<'a, 'b> {
@@ -61,10 +67,13 @@ pub struct CcrDeleteAutoFollowPattern<'a, 'b> {
 }
 impl<'a, 'b> CcrDeleteAutoFollowPattern<'a, 'b> {
     #[doc = "Creates a new instance of [CcrDeleteAutoFollowPattern] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrDeleteAutoFollowPatternParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrDeleteAutoFollowPatternParts<'b>>,
+    {
         CcrDeleteAutoFollowPattern {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -163,6 +172,12 @@ impl<'b> CcrFollowParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrFollowParts<'b> {
+    #[doc = "Builds a [CcrFollowParts::Index] for the Ccr Follow API"]
+    fn from(t: &'b str) -> CcrFollowParts<'b> {
+        CcrFollowParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Follow API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-put-follow.html)"]
 pub struct CcrFollow<'a, 'b, B> {
@@ -182,10 +197,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [CcrFollow] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrFollowParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrFollowParts<'b>>,
+    {
         CcrFollow {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -313,6 +331,12 @@ impl<'b> CcrFollowInfoParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for CcrFollowInfoParts<'b> {
+    #[doc = "Builds a [CcrFollowInfoParts::Index] for the Ccr Follow Info API"]
+    fn from(t: &'b [&'b str]) -> CcrFollowInfoParts<'b> {
+        CcrFollowInfoParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Follow Info API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-get-follow-info.html)"]
 pub struct CcrFollowInfo<'a, 'b> {
@@ -327,10 +351,13 @@ pub struct CcrFollowInfo<'a, 'b> {
 }
 impl<'a, 'b> CcrFollowInfo<'a, 'b> {
     #[doc = "Creates a new instance of [CcrFollowInfo] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrFollowInfoParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrFollowInfoParts<'b>>,
+    {
         CcrFollowInfo {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -430,6 +457,12 @@ impl<'b> CcrFollowStatsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for CcrFollowStatsParts<'b> {
+    #[doc = "Builds a [CcrFollowStatsParts::Index] for the Ccr Follow Stats API"]
+    fn from(t: &'b [&'b str]) -> CcrFollowStatsParts<'b> {
+        CcrFollowStatsParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Follow Stats API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-get-follow-stats.html)"]
 pub struct CcrFollowStats<'a, 'b> {
@@ -444,10 +477,13 @@ pub struct CcrFollowStats<'a, 'b> {
 }
 impl<'a, 'b> CcrFollowStats<'a, 'b> {
     #[doc = "Creates a new instance of [CcrFollowStats] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrFollowStatsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrFollowStatsParts<'b>>,
+    {
         CcrFollowStats {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -546,6 +582,12 @@ impl<'b> CcrForgetFollowerParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrForgetFollowerParts<'b> {
+    #[doc = "Builds a [CcrForgetFollowerParts::Index] for the Ccr Forget Follower API"]
+    fn from(t: &'b str) -> CcrForgetFollowerParts<'b> {
+        CcrForgetFollowerParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Forget Follower API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6)"]
 pub struct CcrForgetFollower<'a, 'b, B> {
@@ -564,10 +606,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [CcrForgetFollower] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrForgetFollowerParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrForgetFollowerParts<'b>>,
+    {
         CcrForgetFollower {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -686,6 +731,12 @@ impl<'b> CcrGetAutoFollowPatternParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrGetAutoFollowPatternParts<'b> {
+    #[doc = "Builds a [CcrGetAutoFollowPatternParts::Name] for the Ccr Get Auto Follow Pattern API"]
+    fn from(t: &'b str) -> CcrGetAutoFollowPatternParts<'b> {
+        CcrGetAutoFollowPatternParts::Name(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Get Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-get-auto-follow-pattern.html)"]
 pub struct CcrGetAutoFollowPattern<'a, 'b> {
@@ -700,10 +751,13 @@ pub struct CcrGetAutoFollowPattern<'a, 'b> {
 }
 impl<'a, 'b> CcrGetAutoFollowPattern<'a, 'b> {
     #[doc = "Creates a new instance of [CcrGetAutoFollowPattern] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrGetAutoFollowPatternParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrGetAutoFollowPatternParts<'b>>,
+    {
         CcrGetAutoFollowPattern {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -802,6 +856,12 @@ impl<'b> CcrPauseAutoFollowPatternParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrPauseAutoFollowPatternParts<'b> {
+    #[doc = "Builds a [CcrPauseAutoFollowPatternParts::Name] for the Ccr Pause Auto Follow Pattern API"]
+    fn from(t: &'b str) -> CcrPauseAutoFollowPatternParts<'b> {
+        CcrPauseAutoFollowPatternParts::Name(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Pause Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-pause-auto-follow-pattern.html)"]
 pub struct CcrPauseAutoFollowPattern<'a, 'b, B> {
@@ -820,10 +880,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [CcrPauseAutoFollowPattern] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrPauseAutoFollowPatternParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrPauseAutoFollowPatternParts<'b>>,
+    {
         CcrPauseAutoFollowPattern {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -940,6 +1003,12 @@ impl<'b> CcrPauseFollowParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrPauseFollowParts<'b> {
+    #[doc = "Builds a [CcrPauseFollowParts::Index] for the Ccr Pause Follow API"]
+    fn from(t: &'b str) -> CcrPauseFollowParts<'b> {
+        CcrPauseFollowParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Pause Follow API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-post-pause-follow.html)"]
 pub struct CcrPauseFollow<'a, 'b, B> {
@@ -958,10 +1027,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [CcrPauseFollow] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrPauseFollowParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrPauseFollowParts<'b>>,
+    {
         CcrPauseFollow {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -1077,6 +1149,12 @@ impl<'b> CcrPutAutoFollowPatternParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrPutAutoFollowPatternParts<'b> {
+    #[doc = "Builds a [CcrPutAutoFollowPatternParts::Name] for the Ccr Put Auto Follow Pattern API"]
+    fn from(t: &'b str) -> CcrPutAutoFollowPatternParts<'b> {
+        CcrPutAutoFollowPatternParts::Name(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Put Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-put-auto-follow-pattern.html)"]
 pub struct CcrPutAutoFollowPattern<'a, 'b, B> {
@@ -1095,10 +1173,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [CcrPutAutoFollowPattern] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrPutAutoFollowPatternParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrPutAutoFollowPatternParts<'b>>,
+    {
         CcrPutAutoFollowPattern {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -1215,6 +1296,12 @@ impl<'b> CcrResumeAutoFollowPatternParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrResumeAutoFollowPatternParts<'b> {
+    #[doc = "Builds a [CcrResumeAutoFollowPatternParts::Name] for the Ccr Resume Auto Follow Pattern API"]
+    fn from(t: &'b str) -> CcrResumeAutoFollowPatternParts<'b> {
+        CcrResumeAutoFollowPatternParts::Name(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Resume Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-resume-auto-follow-pattern.html)"]
 pub struct CcrResumeAutoFollowPattern<'a, 'b, B> {
@@ -1233,10 +1320,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [CcrResumeAutoFollowPattern] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrResumeAutoFollowPatternParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrResumeAutoFollowPatternParts<'b>>,
+    {
         CcrResumeAutoFollowPattern {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -1353,6 +1443,12 @@ impl<'b> CcrResumeFollowParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrResumeFollowParts<'b> {
+    #[doc = "Builds a [CcrResumeFollowParts::Index] for the Ccr Resume Follow API"]
+    fn from(t: &'b str) -> CcrResumeFollowParts<'b> {
+        CcrResumeFollowParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Resume Follow API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-post-resume-follow.html)"]
 pub struct CcrResumeFollow<'a, 'b, B> {
@@ -1371,10 +1467,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [CcrResumeFollow] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrResumeFollowParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrResumeFollowParts<'b>>,
+    {
         CcrResumeFollow {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -1601,6 +1700,12 @@ impl<'b> CcrUnfollowParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for CcrUnfollowParts<'b> {
+    #[doc = "Builds a [CcrUnfollowParts::Index] for the Ccr Unfollow API"]
+    fn from(t: &'b str) -> CcrUnfollowParts<'b> {
+        CcrUnfollowParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ccr Unfollow API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6)"]
 pub struct CcrUnfollow<'a, 'b, B> {
@@ -1619,10 +1724,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [CcrUnfollow] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CcrUnfollowParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CcrUnfollowParts<'b>>,
+    {
         CcrUnfollow {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -1729,71 +1837,89 @@ impl<'a> Ccr<'a> {
         Self { client }
     }
     #[doc = "[Ccr Delete Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-delete-auto-follow-pattern.html)"]
-    pub fn delete_auto_follow_pattern<'b>(
+    pub fn delete_auto_follow_pattern<'b, P>(
         &'a self,
-        parts: CcrDeleteAutoFollowPatternParts<'b>,
-    ) -> CcrDeleteAutoFollowPattern<'a, 'b> {
+        parts: P,
+    ) -> CcrDeleteAutoFollowPattern<'a, 'b>
+    where
+        P: Into<CcrDeleteAutoFollowPatternParts<'b>>,
+    {
         CcrDeleteAutoFollowPattern::new(&self.client, parts)
     }
     #[doc = "[Ccr Follow API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-put-follow.html)"]
-    pub fn follow<'b>(&'a self, parts: CcrFollowParts<'b>) -> CcrFollow<'a, 'b, ()> {
+    pub fn follow<'b, P>(&'a self, parts: P) -> CcrFollow<'a, 'b, ()>
+    where
+        P: Into<CcrFollowParts<'b>>,
+    {
         CcrFollow::new(&self.client, parts)
     }
     #[doc = "[Ccr Follow Info API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-get-follow-info.html)"]
-    pub fn follow_info<'b>(&'a self, parts: CcrFollowInfoParts<'b>) -> CcrFollowInfo<'a, 'b> {
+    pub fn follow_info<'b, P>(&'a self, parts: P) -> CcrFollowInfo<'a, 'b>
+    where
+        P: Into<CcrFollowInfoParts<'b>>,
+    {
         CcrFollowInfo::new(&self.client, parts)
     }
     #[doc = "[Ccr Follow Stats API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-get-follow-stats.html)"]
-    pub fn follow_stats<'b>(&'a self, parts: CcrFollowStatsParts<'b>) -> CcrFollowStats<'a, 'b> {
+    pub fn follow_stats<'b, P>(&'a self, parts: P) -> CcrFollowStats<'a, 'b>
+    where
+        P: Into<CcrFollowStatsParts<'b>>,
+    {
         CcrFollowStats::new(&self.client, parts)
     }
     #[doc = "[Ccr Forget Follower API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6)"]
-    pub fn forget_follower<'b>(
-        &'a self,
-        parts: CcrForgetFollowerParts<'b>,
-    ) -> CcrForgetFollower<'a, 'b, ()> {
+    pub fn forget_follower<'b, P>(&'a self, parts: P) -> CcrForgetFollower<'a, 'b, ()>
+    where
+        P: Into<CcrForgetFollowerParts<'b>>,
+    {
         CcrForgetFollower::new(&self.client, parts)
     }
     #[doc = "[Ccr Get Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-get-auto-follow-pattern.html)"]
-    pub fn get_auto_follow_pattern<'b>(
-        &'a self,
-        parts: CcrGetAutoFollowPatternParts<'b>,
-    ) -> CcrGetAutoFollowPattern<'a, 'b> {
+    pub fn get_auto_follow_pattern<'b, P>(&'a self, parts: P) -> CcrGetAutoFollowPattern<'a, 'b>
+    where
+        P: Into<CcrGetAutoFollowPatternParts<'b>>,
+    {
         CcrGetAutoFollowPattern::new(&self.client, parts)
     }
     #[doc = "[Ccr Pause Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-pause-auto-follow-pattern.html)"]
-    pub fn pause_auto_follow_pattern<'b>(
+    pub fn pause_auto_follow_pattern<'b, P>(
         &'a self,
-        parts: CcrPauseAutoFollowPatternParts<'b>,
-    ) -> CcrPauseAutoFollowPattern<'a, 'b, ()> {
+        parts: P,
+    ) -> CcrPauseAutoFollowPattern<'a, 'b, ()>
+    where
+        P: Into<CcrPauseAutoFollowPatternParts<'b>>,
+    {
         CcrPauseAutoFollowPattern::new(&self.client, parts)
     }
     #[doc = "[Ccr Pause Follow API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-post-pause-follow.html)"]
-    pub fn pause_follow<'b>(
-        &'a self,
-        parts: CcrPauseFollowParts<'b>,
-    ) -> CcrPauseFollow<'a, 'b, ()> {
+    pub fn pause_follow<'b, P>(&'a self, parts: P) -> CcrPauseFollow<'a, 'b, ()>
+    where
+        P: Into<CcrPauseFollowParts<'b>>,
+    {
         CcrPauseFollow::new(&self.client, parts)
     }
     #[doc = "[Ccr Put Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-put-auto-follow-pattern.html)"]
-    pub fn put_auto_follow_pattern<'b>(
-        &'a self,
-        parts: CcrPutAutoFollowPatternParts<'b>,
-    ) -> CcrPutAutoFollowPattern<'a, 'b, ()> {
+    pub fn put_auto_follow_pattern<'b, P>(&'a self, parts: P) -> CcrPutAutoFollowPattern<'a, 'b, ()>
+    where
+        P: Into<CcrPutAutoFollowPatternParts<'b>>,
+    {
         CcrPutAutoFollowPattern::new(&self.client, parts)
     }
     #[doc = "[Ccr Resume Auto Follow Pattern API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-resume-auto-follow-pattern.html)"]
-    pub fn resume_auto_follow_pattern<'b>(
+    pub fn resume_auto_follow_pattern<'b, P>(
         &'a self,
-        parts: CcrResumeAutoFollowPatternParts<'b>,
-    ) -> CcrResumeAutoFollowPattern<'a, 'b, ()> {
+        parts: P,
+    ) -> CcrResumeAutoFollowPattern<'a, 'b, ()>
+    where
+        P: Into<CcrResumeAutoFollowPatternParts<'b>>,
+    {
         CcrResumeAutoFollowPattern::new(&self.client, parts)
     }
     #[doc = "[Ccr Resume Follow API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-post-resume-follow.html)"]
-    pub fn resume_follow<'b>(
-        &'a self,
-        parts: CcrResumeFollowParts<'b>,
-    ) -> CcrResumeFollow<'a, 'b, ()> {
+    pub fn resume_follow<'b, P>(&'a self, parts: P) -> CcrResumeFollow<'a, 'b, ()>
+    where
+        P: Into<CcrResumeFollowParts<'b>>,
+    {
         CcrResumeFollow::new(&self.client, parts)
     }
     #[doc = "[Ccr Stats API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ccr-get-stats.html)"]
@@ -1801,7 +1927,10 @@ impl<'a> Ccr<'a> {
         CcrStats::new(&self.client)
     }
     #[doc = "[Ccr Unfollow API](http://www.elastic.co/guide/en/elasticsearch/reference/7.6)"]
-    pub fn unfollow<'b>(&'a self, parts: CcrUnfollowParts<'b>) -> CcrUnfollow<'a, 'b, ()> {
+    pub fn unfollow<'b, P>(&'a self, parts: P) -> CcrUnfollow<'a, 'b, ()>
+    where
+        P: Into<CcrUnfollowParts<'b>>,
+    {
         CcrUnfollow::new(&self.client, parts)
     }
 }

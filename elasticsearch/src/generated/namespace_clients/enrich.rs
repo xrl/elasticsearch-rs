@@ -47,6 +47,12 @@ impl<'b> EnrichDeletePolicyParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for EnrichDeletePolicyParts<'b> {
+    #[doc = "Builds a [EnrichDeletePolicyParts::Name] for the Enrich Delete Policy API"]
+    fn from(t: &'b str) -> EnrichDeletePolicyParts<'b> {
+        EnrichDeletePolicyParts::Name(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Enrich Delete Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/enrich-delete-policy.html)"]
 pub struct EnrichDeletePolicy<'a, 'b> {
@@ -61,10 +67,13 @@ pub struct EnrichDeletePolicy<'a, 'b> {
 }
 impl<'a, 'b> EnrichDeletePolicy<'a, 'b> {
     #[doc = "Creates a new instance of [EnrichDeletePolicy] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: EnrichDeletePolicyParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<EnrichDeletePolicyParts<'b>>,
+    {
         EnrichDeletePolicy {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -163,6 +172,12 @@ impl<'b> EnrichExecutePolicyParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for EnrichExecutePolicyParts<'b> {
+    #[doc = "Builds a [EnrichExecutePolicyParts::Name] for the Enrich Execute Policy API"]
+    fn from(t: &'b str) -> EnrichExecutePolicyParts<'b> {
+        EnrichExecutePolicyParts::Name(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Enrich Execute Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/enrich-execute-policy.html)"]
 pub struct EnrichExecutePolicy<'a, 'b, B> {
@@ -182,10 +197,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [EnrichExecutePolicy] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: EnrichExecutePolicyParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<EnrichExecutePolicyParts<'b>>,
+    {
         EnrichExecutePolicy {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -315,6 +333,12 @@ impl<'b> EnrichGetPolicyParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for EnrichGetPolicyParts<'b> {
+    #[doc = "Builds a [EnrichGetPolicyParts::Name] for the Enrich Get Policy API"]
+    fn from(t: &'b [&'b str]) -> EnrichGetPolicyParts<'b> {
+        EnrichGetPolicyParts::Name(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Enrich Get Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/enrich-get-policy.html)"]
 pub struct EnrichGetPolicy<'a, 'b> {
@@ -329,10 +353,13 @@ pub struct EnrichGetPolicy<'a, 'b> {
 }
 impl<'a, 'b> EnrichGetPolicy<'a, 'b> {
     #[doc = "Creates a new instance of [EnrichGetPolicy] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: EnrichGetPolicyParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<EnrichGetPolicyParts<'b>>,
+    {
         EnrichGetPolicy {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -430,6 +457,12 @@ impl<'b> EnrichPutPolicyParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for EnrichPutPolicyParts<'b> {
+    #[doc = "Builds a [EnrichPutPolicyParts::Name] for the Enrich Put Policy API"]
+    fn from(t: &'b str) -> EnrichPutPolicyParts<'b> {
+        EnrichPutPolicyParts::Name(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Enrich Put Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/enrich-put-policy.html)"]
 pub struct EnrichPutPolicy<'a, 'b, B> {
@@ -448,10 +481,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [EnrichPutPolicy] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: EnrichPutPolicyParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<EnrichPutPolicyParts<'b>>,
+    {
         EnrichPutPolicy {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -668,28 +704,31 @@ impl<'a> Enrich<'a> {
         Self { client }
     }
     #[doc = "[Enrich Delete Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/enrich-delete-policy.html)"]
-    pub fn delete_policy<'b>(
-        &'a self,
-        parts: EnrichDeletePolicyParts<'b>,
-    ) -> EnrichDeletePolicy<'a, 'b> {
+    pub fn delete_policy<'b, P>(&'a self, parts: P) -> EnrichDeletePolicy<'a, 'b>
+    where
+        P: Into<EnrichDeletePolicyParts<'b>>,
+    {
         EnrichDeletePolicy::new(&self.client, parts)
     }
     #[doc = "[Enrich Execute Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/enrich-execute-policy.html)"]
-    pub fn execute_policy<'b>(
-        &'a self,
-        parts: EnrichExecutePolicyParts<'b>,
-    ) -> EnrichExecutePolicy<'a, 'b, ()> {
+    pub fn execute_policy<'b, P>(&'a self, parts: P) -> EnrichExecutePolicy<'a, 'b, ()>
+    where
+        P: Into<EnrichExecutePolicyParts<'b>>,
+    {
         EnrichExecutePolicy::new(&self.client, parts)
     }
     #[doc = "[Enrich Get Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/enrich-get-policy.html)"]
-    pub fn get_policy<'b>(&'a self, parts: EnrichGetPolicyParts<'b>) -> EnrichGetPolicy<'a, 'b> {
+    pub fn get_policy<'b, P>(&'a self, parts: P) -> EnrichGetPolicy<'a, 'b>
+    where
+        P: Into<EnrichGetPolicyParts<'b>>,
+    {
         EnrichGetPolicy::new(&self.client, parts)
     }
     #[doc = "[Enrich Put Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/enrich-put-policy.html)"]
-    pub fn put_policy<'b>(
-        &'a self,
-        parts: EnrichPutPolicyParts<'b>,
-    ) -> EnrichPutPolicy<'a, 'b, ()> {
+    pub fn put_policy<'b, P>(&'a self, parts: P) -> EnrichPutPolicy<'a, 'b, ()>
+    where
+        P: Into<EnrichPutPolicyParts<'b>>,
+    {
         EnrichPutPolicy::new(&self.client, parts)
     }
     #[doc = "[Enrich Stats API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/enrich-stats.html)"]

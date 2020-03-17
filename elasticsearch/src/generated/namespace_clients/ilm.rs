@@ -47,6 +47,12 @@ impl<'b> IlmDeleteLifecycleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for IlmDeleteLifecycleParts<'b> {
+    #[doc = "Builds a [IlmDeleteLifecycleParts::Policy] for the Ilm Delete Lifecycle API"]
+    fn from(t: &'b str) -> IlmDeleteLifecycleParts<'b> {
+        IlmDeleteLifecycleParts::Policy(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ilm Delete Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-delete-lifecycle.html)"]
 pub struct IlmDeleteLifecycle<'a, 'b> {
@@ -61,10 +67,13 @@ pub struct IlmDeleteLifecycle<'a, 'b> {
 }
 impl<'a, 'b> IlmDeleteLifecycle<'a, 'b> {
     #[doc = "Creates a new instance of [IlmDeleteLifecycle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: IlmDeleteLifecycleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<IlmDeleteLifecycleParts<'b>>,
+    {
         IlmDeleteLifecycle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -163,6 +172,12 @@ impl<'b> IlmExplainLifecycleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for IlmExplainLifecycleParts<'b> {
+    #[doc = "Builds a [IlmExplainLifecycleParts::Index] for the Ilm Explain Lifecycle API"]
+    fn from(t: &'b str) -> IlmExplainLifecycleParts<'b> {
+        IlmExplainLifecycleParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ilm Explain Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-explain-lifecycle.html)"]
 pub struct IlmExplainLifecycle<'a, 'b> {
@@ -179,10 +194,13 @@ pub struct IlmExplainLifecycle<'a, 'b> {
 }
 impl<'a, 'b> IlmExplainLifecycle<'a, 'b> {
     #[doc = "Creates a new instance of [IlmExplainLifecycle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: IlmExplainLifecycleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<IlmExplainLifecycleParts<'b>>,
+    {
         IlmExplainLifecycle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -301,6 +319,12 @@ impl<'b> IlmGetLifecycleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for IlmGetLifecycleParts<'b> {
+    #[doc = "Builds a [IlmGetLifecycleParts::Policy] for the Ilm Get Lifecycle API"]
+    fn from(t: &'b str) -> IlmGetLifecycleParts<'b> {
+        IlmGetLifecycleParts::Policy(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ilm Get Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-get-lifecycle.html)"]
 pub struct IlmGetLifecycle<'a, 'b> {
@@ -315,10 +339,13 @@ pub struct IlmGetLifecycle<'a, 'b> {
 }
 impl<'a, 'b> IlmGetLifecycle<'a, 'b> {
     #[doc = "Creates a new instance of [IlmGetLifecycle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: IlmGetLifecycleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<IlmGetLifecycleParts<'b>>,
+    {
         IlmGetLifecycle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -526,6 +553,12 @@ impl<'b> IlmMoveToStepParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for IlmMoveToStepParts<'b> {
+    #[doc = "Builds a [IlmMoveToStepParts::Index] for the Ilm Move To Step API"]
+    fn from(t: &'b str) -> IlmMoveToStepParts<'b> {
+        IlmMoveToStepParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ilm Move To Step API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-move-to-step.html)"]
 pub struct IlmMoveToStep<'a, 'b, B> {
@@ -544,10 +577,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [IlmMoveToStep] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: IlmMoveToStepParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<IlmMoveToStepParts<'b>>,
+    {
         IlmMoveToStep {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -663,6 +699,12 @@ impl<'b> IlmPutLifecycleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for IlmPutLifecycleParts<'b> {
+    #[doc = "Builds a [IlmPutLifecycleParts::Policy] for the Ilm Put Lifecycle API"]
+    fn from(t: &'b str) -> IlmPutLifecycleParts<'b> {
+        IlmPutLifecycleParts::Policy(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ilm Put Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-put-lifecycle.html)"]
 pub struct IlmPutLifecycle<'a, 'b, B> {
@@ -681,10 +723,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [IlmPutLifecycle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: IlmPutLifecycleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<IlmPutLifecycleParts<'b>>,
+    {
         IlmPutLifecycle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -801,6 +846,12 @@ impl<'b> IlmRemovePolicyParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for IlmRemovePolicyParts<'b> {
+    #[doc = "Builds a [IlmRemovePolicyParts::Index] for the Ilm Remove Policy API"]
+    fn from(t: &'b str) -> IlmRemovePolicyParts<'b> {
+        IlmRemovePolicyParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ilm Remove Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-remove-policy.html)"]
 pub struct IlmRemovePolicy<'a, 'b, B> {
@@ -819,10 +870,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [IlmRemovePolicy] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: IlmRemovePolicyParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<IlmRemovePolicyParts<'b>>,
+    {
         IlmRemovePolicy {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -939,6 +993,12 @@ impl<'b> IlmRetryParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for IlmRetryParts<'b> {
+    #[doc = "Builds a [IlmRetryParts::Index] for the Ilm Retry API"]
+    fn from(t: &'b str) -> IlmRetryParts<'b> {
+        IlmRetryParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Ilm Retry API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-retry-policy.html)"]
 pub struct IlmRetry<'a, 'b, B> {
@@ -957,10 +1017,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [IlmRetry] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: IlmRetryParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<IlmRetryParts<'b>>,
+    {
         IlmRetry {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -1331,21 +1394,24 @@ impl<'a> Ilm<'a> {
         Self { client }
     }
     #[doc = "[Ilm Delete Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-delete-lifecycle.html)"]
-    pub fn delete_lifecycle<'b>(
-        &'a self,
-        parts: IlmDeleteLifecycleParts<'b>,
-    ) -> IlmDeleteLifecycle<'a, 'b> {
+    pub fn delete_lifecycle<'b, P>(&'a self, parts: P) -> IlmDeleteLifecycle<'a, 'b>
+    where
+        P: Into<IlmDeleteLifecycleParts<'b>>,
+    {
         IlmDeleteLifecycle::new(&self.client, parts)
     }
     #[doc = "[Ilm Explain Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-explain-lifecycle.html)"]
-    pub fn explain_lifecycle<'b>(
-        &'a self,
-        parts: IlmExplainLifecycleParts<'b>,
-    ) -> IlmExplainLifecycle<'a, 'b> {
+    pub fn explain_lifecycle<'b, P>(&'a self, parts: P) -> IlmExplainLifecycle<'a, 'b>
+    where
+        P: Into<IlmExplainLifecycleParts<'b>>,
+    {
         IlmExplainLifecycle::new(&self.client, parts)
     }
     #[doc = "[Ilm Get Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-get-lifecycle.html)"]
-    pub fn get_lifecycle<'b>(&'a self, parts: IlmGetLifecycleParts<'b>) -> IlmGetLifecycle<'a, 'b> {
+    pub fn get_lifecycle<'b, P>(&'a self, parts: P) -> IlmGetLifecycle<'a, 'b>
+    where
+        P: Into<IlmGetLifecycleParts<'b>>,
+    {
         IlmGetLifecycle::new(&self.client, parts)
     }
     #[doc = "[Ilm Get Status API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-get-status.html)"]
@@ -1353,25 +1419,31 @@ impl<'a> Ilm<'a> {
         IlmGetStatus::new(&self.client)
     }
     #[doc = "[Ilm Move To Step API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-move-to-step.html)"]
-    pub fn move_to_step<'b>(&'a self, parts: IlmMoveToStepParts<'b>) -> IlmMoveToStep<'a, 'b, ()> {
+    pub fn move_to_step<'b, P>(&'a self, parts: P) -> IlmMoveToStep<'a, 'b, ()>
+    where
+        P: Into<IlmMoveToStepParts<'b>>,
+    {
         IlmMoveToStep::new(&self.client, parts)
     }
     #[doc = "[Ilm Put Lifecycle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-put-lifecycle.html)"]
-    pub fn put_lifecycle<'b>(
-        &'a self,
-        parts: IlmPutLifecycleParts<'b>,
-    ) -> IlmPutLifecycle<'a, 'b, ()> {
+    pub fn put_lifecycle<'b, P>(&'a self, parts: P) -> IlmPutLifecycle<'a, 'b, ()>
+    where
+        P: Into<IlmPutLifecycleParts<'b>>,
+    {
         IlmPutLifecycle::new(&self.client, parts)
     }
     #[doc = "[Ilm Remove Policy API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-remove-policy.html)"]
-    pub fn remove_policy<'b>(
-        &'a self,
-        parts: IlmRemovePolicyParts<'b>,
-    ) -> IlmRemovePolicy<'a, 'b, ()> {
+    pub fn remove_policy<'b, P>(&'a self, parts: P) -> IlmRemovePolicy<'a, 'b, ()>
+    where
+        P: Into<IlmRemovePolicyParts<'b>>,
+    {
         IlmRemovePolicy::new(&self.client, parts)
     }
     #[doc = "[Ilm Retry API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-retry-policy.html)"]
-    pub fn retry<'b>(&'a self, parts: IlmRetryParts<'b>) -> IlmRetry<'a, 'b, ()> {
+    pub fn retry<'b, P>(&'a self, parts: P) -> IlmRetry<'a, 'b, ()>
+    where
+        P: Into<IlmRetryParts<'b>>,
+    {
         IlmRetry::new(&self.client, parts)
     }
     #[doc = "[Ilm Start API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/ilm-start.html)"]

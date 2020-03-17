@@ -62,6 +62,18 @@ impl<'b> BulkParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for BulkParts<'b> {
+    #[doc = "Builds a [BulkParts::Index] for the Bulk API"]
+    fn from(t: &'b str) -> BulkParts<'b> {
+        BulkParts::Index(t)
+    }
+}
+impl<'b> From<(&'b str, &'b str)> for BulkParts<'b> {
+    #[doc = "Builds a [BulkParts::IndexType] for the Bulk API"]
+    fn from(t: (&'b str, &'b str)) -> BulkParts<'b> {
+        BulkParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-bulk.html)\n\nAllows to perform multiple index/update/delete operations in a single request."]
 pub struct Bulk<'a, 'b, B> {
@@ -89,10 +101,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Bulk] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: BulkParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<BulkParts<'b>>,
+    {
         Bulk {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -311,6 +326,12 @@ impl<'b> ClearScrollParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for ClearScrollParts<'b> {
+    #[doc = "Builds a [ClearScrollParts::ScrollId] for the Clear Scroll API"]
+    fn from(t: &'b [&'b str]) -> ClearScrollParts<'b> {
+        ClearScrollParts::ScrollId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Clear Scroll API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-request-body.html#_clear_scroll_api)\n\nExplicitly clears the search context for a scroll."]
 pub struct ClearScroll<'a, 'b, B> {
@@ -329,10 +350,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [ClearScroll] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: ClearScrollParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<ClearScrollParts<'b>>,
+    {
         ClearScroll {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -466,6 +490,18 @@ impl<'b> CountParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for CountParts<'b> {
+    #[doc = "Builds a [CountParts::Index] for the Count API"]
+    fn from(t: &'b [&'b str]) -> CountParts<'b> {
+        CountParts::Index(t)
+    }
+}
+impl<'b> From<(&'b [&'b str], &'b [&'b str])> for CountParts<'b> {
+    #[doc = "Builds a [CountParts::IndexType] for the Count API"]
+    fn from(t: (&'b [&'b str], &'b [&'b str])) -> CountParts<'b> {
+        CountParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Count API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-count.html)\n\nReturns number of documents matching a query."]
 pub struct Count<'a, 'b, B> {
@@ -498,10 +534,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Count] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CountParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CountParts<'b>>,
+    {
         Count {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_indices: None,
             analyze_wildcard: None,
@@ -778,6 +817,18 @@ impl<'b> CreateParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for CreateParts<'b> {
+    #[doc = "Builds a [CreateParts::IndexId] for the Create API"]
+    fn from(t: (&'b str, &'b str)) -> CreateParts<'b> {
+        CreateParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for CreateParts<'b> {
+    #[doc = "Builds a [CreateParts::IndexTypeId] for the Create API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> CreateParts<'b> {
+        CreateParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Create API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-index_.html)\n\nCreates a new document in the index.\n\nReturns a 409 response when a document with a same ID already exists in the index."]
 pub struct Create<'a, 'b, B> {
@@ -803,10 +854,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Create] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: CreateParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<CreateParts<'b>>,
+    {
         Create {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -1006,6 +1060,18 @@ impl<'b> DeleteParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for DeleteParts<'b> {
+    #[doc = "Builds a [DeleteParts::IndexId] for the Delete API"]
+    fn from(t: (&'b str, &'b str)) -> DeleteParts<'b> {
+        DeleteParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for DeleteParts<'b> {
+    #[doc = "Builds a [DeleteParts::IndexTypeId] for the Delete API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> DeleteParts<'b> {
+        DeleteParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Delete API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-delete.html)\n\nRemoves a document from the index."]
 pub struct Delete<'a, 'b> {
@@ -1028,10 +1094,13 @@ pub struct Delete<'a, 'b> {
 }
 impl<'a, 'b> Delete<'a, 'b> {
     #[doc = "Creates a new instance of [Delete] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: DeleteParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<DeleteParts<'b>>,
+    {
         Delete {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -1216,6 +1285,18 @@ impl<'b> DeleteByQueryParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for DeleteByQueryParts<'b> {
+    #[doc = "Builds a [DeleteByQueryParts::Index] for the Delete By Query API"]
+    fn from(t: &'b [&'b str]) -> DeleteByQueryParts<'b> {
+        DeleteByQueryParts::Index(t)
+    }
+}
+impl<'b> From<(&'b [&'b str], &'b [&'b str])> for DeleteByQueryParts<'b> {
+    #[doc = "Builds a [DeleteByQueryParts::IndexType] for the Delete By Query API"]
+    fn from(t: (&'b [&'b str], &'b [&'b str])) -> DeleteByQueryParts<'b> {
+        DeleteByQueryParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Delete By Query API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-delete-by-query.html)\n\nDeletes documents matching the provided query."]
 pub struct DeleteByQuery<'a, 'b, B> {
@@ -1267,10 +1348,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [DeleteByQuery] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: DeleteByQueryParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<DeleteByQueryParts<'b>>,
+    {
         DeleteByQuery {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -1729,6 +1813,12 @@ impl<'b> DeleteByQueryRethrottleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for DeleteByQueryRethrottleParts<'b> {
+    #[doc = "Builds a [DeleteByQueryRethrottleParts::TaskId] for the Delete By Query Rethrottle API"]
+    fn from(t: &'b str) -> DeleteByQueryRethrottleParts<'b> {
+        DeleteByQueryRethrottleParts::TaskId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Delete By Query Rethrottle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-delete-by-query.html)\n\nChanges the number of requests per second for a particular Delete By Query operation."]
 pub struct DeleteByQueryRethrottle<'a, 'b, B> {
@@ -1748,10 +1838,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [DeleteByQueryRethrottle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: DeleteByQueryRethrottleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<DeleteByQueryRethrottleParts<'b>>,
+    {
         DeleteByQueryRethrottle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -1877,6 +1970,12 @@ impl<'b> DeleteScriptParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for DeleteScriptParts<'b> {
+    #[doc = "Builds a [DeleteScriptParts::Id] for the Delete Script API"]
+    fn from(t: &'b str) -> DeleteScriptParts<'b> {
+        DeleteScriptParts::Id(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Delete Script API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-scripting.html)\n\nDeletes a script."]
 pub struct DeleteScript<'a, 'b> {
@@ -1893,10 +1992,13 @@ pub struct DeleteScript<'a, 'b> {
 }
 impl<'a, 'b> DeleteScript<'a, 'b> {
     #[doc = "Creates a new instance of [DeleteScript] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: DeleteScriptParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<DeleteScriptParts<'b>>,
+    {
         DeleteScript {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -2026,6 +2128,18 @@ impl<'b> ExistsParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for ExistsParts<'b> {
+    #[doc = "Builds a [ExistsParts::IndexId] for the Exists API"]
+    fn from(t: (&'b str, &'b str)) -> ExistsParts<'b> {
+        ExistsParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for ExistsParts<'b> {
+    #[doc = "Builds a [ExistsParts::IndexTypeId] for the Exists API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> ExistsParts<'b> {
+        ExistsParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Exists API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-get.html)\n\nReturns information about whether a document exists in an index."]
 pub struct Exists<'a, 'b> {
@@ -2050,10 +2164,13 @@ pub struct Exists<'a, 'b> {
 }
 impl<'a, 'b> Exists<'a, 'b> {
     #[doc = "Creates a new instance of [Exists] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: ExistsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<ExistsParts<'b>>,
+    {
         Exists {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -2268,6 +2385,18 @@ impl<'b> ExistsSourceParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for ExistsSourceParts<'b> {
+    #[doc = "Builds a [ExistsSourceParts::IndexId] for the Exists Source API"]
+    fn from(t: (&'b str, &'b str)) -> ExistsSourceParts<'b> {
+        ExistsSourceParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for ExistsSourceParts<'b> {
+    #[doc = "Builds a [ExistsSourceParts::IndexTypeId] for the Exists Source API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> ExistsSourceParts<'b> {
+        ExistsSourceParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Exists Source API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-get.html)\n\nReturns information about whether a document source exists in an index."]
 pub struct ExistsSource<'a, 'b> {
@@ -2291,10 +2420,13 @@ pub struct ExistsSource<'a, 'b> {
 }
 impl<'a, 'b> ExistsSource<'a, 'b> {
     #[doc = "Creates a new instance of [ExistsSource] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: ExistsSourceParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<ExistsSourceParts<'b>>,
+    {
         ExistsSource {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -2497,6 +2629,18 @@ impl<'b> ExplainParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for ExplainParts<'b> {
+    #[doc = "Builds a [ExplainParts::IndexId] for the Explain API"]
+    fn from(t: (&'b str, &'b str)) -> ExplainParts<'b> {
+        ExplainParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for ExplainParts<'b> {
+    #[doc = "Builds a [ExplainParts::IndexTypeId] for the Explain API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> ExplainParts<'b> {
+        ExplainParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Explain API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-explain.html)\n\nReturns information about why a specific matches (or doesn't match) a query."]
 pub struct Explain<'a, 'b, B> {
@@ -2527,10 +2671,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Explain] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: ExplainParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<ExplainParts<'b>>,
+    {
         Explain {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -2786,6 +2933,12 @@ impl<'b> FieldCapsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for FieldCapsParts<'b> {
+    #[doc = "Builds a [FieldCapsParts::Index] for the Field Caps API"]
+    fn from(t: &'b [&'b str]) -> FieldCapsParts<'b> {
+        FieldCapsParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Field Caps API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-field-caps.html)\n\nReturns the information about the capabilities of fields among multiple indices."]
 pub struct FieldCaps<'a, 'b, B> {
@@ -2809,10 +2962,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [FieldCaps] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: FieldCapsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<FieldCapsParts<'b>>,
+    {
         FieldCaps {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_indices: None,
             body: None,
@@ -2995,6 +3151,18 @@ impl<'b> GetParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for GetParts<'b> {
+    #[doc = "Builds a [GetParts::IndexId] for the Get API"]
+    fn from(t: (&'b str, &'b str)) -> GetParts<'b> {
+        GetParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for GetParts<'b> {
+    #[doc = "Builds a [GetParts::IndexTypeId] for the Get API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> GetParts<'b> {
+        GetParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Get API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-get.html)\n\nReturns a document."]
 pub struct Get<'a, 'b> {
@@ -3019,10 +3187,13 @@ pub struct Get<'a, 'b> {
 }
 impl<'a, 'b> Get<'a, 'b> {
     #[doc = "Creates a new instance of [Get] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: GetParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<GetParts<'b>>,
+    {
         Get {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -3222,6 +3393,12 @@ impl<'b> GetScriptParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for GetScriptParts<'b> {
+    #[doc = "Builds a [GetScriptParts::Id] for the Get Script API"]
+    fn from(t: &'b str) -> GetScriptParts<'b> {
+        GetScriptParts::Id(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Get Script API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-scripting.html)\n\nReturns a script."]
 pub struct GetScript<'a, 'b> {
@@ -3237,10 +3414,13 @@ pub struct GetScript<'a, 'b> {
 }
 impl<'a, 'b> GetScript<'a, 'b> {
     #[doc = "Creates a new instance of [GetScript] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: GetScriptParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<GetScriptParts<'b>>,
+    {
         GetScript {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             error_trace: None,
             filter_path: None,
@@ -3362,6 +3542,18 @@ impl<'b> GetSourceParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for GetSourceParts<'b> {
+    #[doc = "Builds a [GetSourceParts::IndexId] for the Get Source API"]
+    fn from(t: (&'b str, &'b str)) -> GetSourceParts<'b> {
+        GetSourceParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for GetSourceParts<'b> {
+    #[doc = "Builds a [GetSourceParts::IndexTypeId] for the Get Source API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> GetSourceParts<'b> {
+        GetSourceParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Get Source API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-get.html)\n\nReturns the source of a document."]
 pub struct GetSource<'a, 'b> {
@@ -3385,10 +3577,13 @@ pub struct GetSource<'a, 'b> {
 }
 impl<'a, 'b> GetSource<'a, 'b> {
     #[doc = "Creates a new instance of [GetSource] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: GetSourceParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<GetSourceParts<'b>>,
+    {
         GetSource {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -3609,6 +3804,24 @@ impl<'b> IndexParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for IndexParts<'b> {
+    #[doc = "Builds a [IndexParts::IndexId] for the Index API"]
+    fn from(t: (&'b str, &'b str)) -> IndexParts<'b> {
+        IndexParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<&'b str> for IndexParts<'b> {
+    #[doc = "Builds a [IndexParts::Index] for the Index API"]
+    fn from(t: &'b str) -> IndexParts<'b> {
+        IndexParts::Index(t)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for IndexParts<'b> {
+    #[doc = "Builds a [IndexParts::IndexTypeId] for the Index API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> IndexParts<'b> {
+        IndexParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Index API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-index_.html)\n\nCreates or updates a document in an index."]
 pub struct Index<'a, 'b, B> {
@@ -3637,10 +3850,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Index] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: IndexParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<IndexParts<'b>>,
+    {
         Index {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -3981,6 +4197,18 @@ impl<'b> MgetParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MgetParts<'b> {
+    #[doc = "Builds a [MgetParts::Index] for the Mget API"]
+    fn from(t: &'b str) -> MgetParts<'b> {
+        MgetParts::Index(t)
+    }
+}
+impl<'b> From<(&'b str, &'b str)> for MgetParts<'b> {
+    #[doc = "Builds a [MgetParts::IndexType] for the Mget API"]
+    fn from(t: (&'b str, &'b str)) -> MgetParts<'b> {
+        MgetParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Mget API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-multi-get.html)\n\nAllows to get multiple documents in one request."]
 pub struct Mget<'a, 'b, B> {
@@ -4007,10 +4235,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Mget] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MgetParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MgetParts<'b>>,
+    {
         Mget {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -4239,6 +4470,18 @@ impl<'b> MsearchParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for MsearchParts<'b> {
+    #[doc = "Builds a [MsearchParts::Index] for the Msearch API"]
+    fn from(t: &'b [&'b str]) -> MsearchParts<'b> {
+        MsearchParts::Index(t)
+    }
+}
+impl<'b> From<(&'b [&'b str], &'b [&'b str])> for MsearchParts<'b> {
+    #[doc = "Builds a [MsearchParts::IndexType] for the Msearch API"]
+    fn from(t: (&'b [&'b str], &'b [&'b str])) -> MsearchParts<'b> {
+        MsearchParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Msearch API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-multi-search.html)\n\nAllows to execute several search operations in one request."]
 pub struct Msearch<'a, 'b, B> {
@@ -4264,10 +4507,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Msearch] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MsearchParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MsearchParts<'b>>,
+    {
         Msearch {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             ccs_minimize_roundtrips: None,
@@ -4474,6 +4720,18 @@ impl<'b> MsearchTemplateParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for MsearchTemplateParts<'b> {
+    #[doc = "Builds a [MsearchTemplateParts::Index] for the Msearch Template API"]
+    fn from(t: &'b [&'b str]) -> MsearchTemplateParts<'b> {
+        MsearchTemplateParts::Index(t)
+    }
+}
+impl<'b> From<(&'b [&'b str], &'b [&'b str])> for MsearchTemplateParts<'b> {
+    #[doc = "Builds a [MsearchTemplateParts::IndexType] for the Msearch Template API"]
+    fn from(t: (&'b [&'b str], &'b [&'b str])) -> MsearchTemplateParts<'b> {
+        MsearchTemplateParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Msearch Template API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-multi-search.html)\n\nAllows to execute several search template operations in one request."]
 pub struct MsearchTemplate<'a, 'b, B> {
@@ -4497,10 +4755,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [MsearchTemplate] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MsearchTemplateParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MsearchTemplateParts<'b>>,
+    {
         MsearchTemplate {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             ccs_minimize_roundtrips: None,
@@ -4684,6 +4945,18 @@ impl<'b> MtermvectorsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for MtermvectorsParts<'b> {
+    #[doc = "Builds a [MtermvectorsParts::Index] for the Mtermvectors API"]
+    fn from(t: &'b str) -> MtermvectorsParts<'b> {
+        MtermvectorsParts::Index(t)
+    }
+}
+impl<'b> From<(&'b str, &'b str)> for MtermvectorsParts<'b> {
+    #[doc = "Builds a [MtermvectorsParts::IndexType] for the Mtermvectors API"]
+    fn from(t: (&'b str, &'b str)) -> MtermvectorsParts<'b> {
+        MtermvectorsParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Mtermvectors API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-multi-termvectors.html)\n\nReturns multiple termvectors in one request."]
 pub struct Mtermvectors<'a, 'b, B> {
@@ -4714,10 +4987,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Mtermvectors] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: MtermvectorsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<MtermvectorsParts<'b>>,
+    {
         Mtermvectors {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -5076,6 +5352,18 @@ impl<'b> PutScriptParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for PutScriptParts<'b> {
+    #[doc = "Builds a [PutScriptParts::Id] for the Put Script API"]
+    fn from(t: &'b str) -> PutScriptParts<'b> {
+        PutScriptParts::Id(t)
+    }
+}
+impl<'b> From<(&'b str, &'b str)> for PutScriptParts<'b> {
+    #[doc = "Builds a [PutScriptParts::IdContext] for the Put Script API"]
+    fn from(t: (&'b str, &'b str)) -> PutScriptParts<'b> {
+        PutScriptParts::IdContext(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Put Script API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-scripting.html)\n\nCreates or updates a script."]
 pub struct PutScript<'a, 'b, B> {
@@ -5097,10 +5385,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [PutScript] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: PutScriptParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<PutScriptParts<'b>>,
+    {
         PutScript {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             context: None,
@@ -5467,6 +5758,12 @@ impl<'b> ReindexRethrottleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for ReindexRethrottleParts<'b> {
+    #[doc = "Builds a [ReindexRethrottleParts::TaskId] for the Reindex Rethrottle API"]
+    fn from(t: &'b str) -> ReindexRethrottleParts<'b> {
+        ReindexRethrottleParts::TaskId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Reindex Rethrottle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-reindex.html)\n\nChanges the number of requests per second for a particular Reindex operation."]
 pub struct ReindexRethrottle<'a, 'b, B> {
@@ -5486,10 +5783,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [ReindexRethrottle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: ReindexRethrottleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<ReindexRethrottleParts<'b>>,
+    {
         ReindexRethrottle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -5618,6 +5918,12 @@ impl<'b> RenderSearchTemplateParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for RenderSearchTemplateParts<'b> {
+    #[doc = "Builds a [RenderSearchTemplateParts::Id] for the Render Search Template API"]
+    fn from(t: &'b str) -> RenderSearchTemplateParts<'b> {
+        RenderSearchTemplateParts::Id(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Render Search Template API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-template.html#_validating_templates)\n\nAllows to use the Mustache language to pre-render a search definition."]
 pub struct RenderSearchTemplate<'a, 'b, B> {
@@ -5636,10 +5942,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [RenderSearchTemplate] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: RenderSearchTemplateParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<RenderSearchTemplateParts<'b>>,
+    {
         RenderSearchTemplate {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -5761,6 +6070,12 @@ impl<'b> ScrollParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for ScrollParts<'b> {
+    #[doc = "Builds a [ScrollParts::ScrollId] for the Scroll API"]
+    fn from(t: &'b str) -> ScrollParts<'b> {
+        ScrollParts::ScrollId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Scroll API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-request-body.html#request-body-search-scroll)\n\nAllows to retrieve a large numbers of results from a single search request."]
 pub struct Scroll<'a, 'b, B> {
@@ -5782,10 +6097,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Scroll] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: ScrollParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<ScrollParts<'b>>,
+    {
         Scroll {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -5952,6 +6270,18 @@ impl<'b> SearchParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for SearchParts<'b> {
+    #[doc = "Builds a [SearchParts::Index] for the Search API"]
+    fn from(t: &'b [&'b str]) -> SearchParts<'b> {
+        SearchParts::Index(t)
+    }
+}
+impl<'b> From<(&'b [&'b str], &'b [&'b str])> for SearchParts<'b> {
+    #[doc = "Builds a [SearchParts::IndexType] for the Search API"]
+    fn from(t: (&'b [&'b str], &'b [&'b str])) -> SearchParts<'b> {
+        SearchParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Search API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-search.html)\n\nReturns results matching a query."]
 pub struct Search<'a, 'b, B> {
@@ -6012,10 +6342,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Search] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: SearchParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<SearchParts<'b>>,
+    {
         Search {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -6577,6 +6910,12 @@ impl<'b> SearchShardsParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for SearchShardsParts<'b> {
+    #[doc = "Builds a [SearchShardsParts::Index] for the Search Shards API"]
+    fn from(t: &'b [&'b str]) -> SearchShardsParts<'b> {
+        SearchShardsParts::Index(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Search Shards API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-shards.html)\n\nReturns information about the indices and shards that a search request would be executed against."]
 pub struct SearchShards<'a, 'b, B> {
@@ -6601,10 +6940,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [SearchShards] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: SearchShardsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<SearchShardsParts<'b>>,
+    {
         SearchShards {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_indices: None,
             body: None,
@@ -6801,6 +7143,18 @@ impl<'b> SearchTemplateParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for SearchTemplateParts<'b> {
+    #[doc = "Builds a [SearchTemplateParts::Index] for the Search Template API"]
+    fn from(t: &'b [&'b str]) -> SearchTemplateParts<'b> {
+        SearchTemplateParts::Index(t)
+    }
+}
+impl<'b> From<(&'b [&'b str], &'b [&'b str])> for SearchTemplateParts<'b> {
+    #[doc = "Builds a [SearchTemplateParts::IndexType] for the Search Template API"]
+    fn from(t: (&'b [&'b str], &'b [&'b str])) -> SearchTemplateParts<'b> {
+        SearchTemplateParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Search Template API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-template.html)\n\nAllows to use the Mustache language to pre-render a search definition."]
 pub struct SearchTemplate<'a, 'b, B> {
@@ -6832,10 +7186,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [SearchTemplate] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: SearchTemplateParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<SearchTemplateParts<'b>>,
+    {
         SearchTemplate {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             allow_no_indices: None,
             body: None,
@@ -7122,6 +7479,24 @@ impl<'b> TermvectorsParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for TermvectorsParts<'b> {
+    #[doc = "Builds a [TermvectorsParts::IndexId] for the Termvectors API"]
+    fn from(t: (&'b str, &'b str)) -> TermvectorsParts<'b> {
+        TermvectorsParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<&'b str> for TermvectorsParts<'b> {
+    #[doc = "Builds a [TermvectorsParts::Index] for the Termvectors API"]
+    fn from(t: &'b str) -> TermvectorsParts<'b> {
+        TermvectorsParts::Index(t)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for TermvectorsParts<'b> {
+    #[doc = "Builds a [TermvectorsParts::IndexTypeId] for the Termvectors API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> TermvectorsParts<'b> {
+        TermvectorsParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Termvectors API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-termvectors.html)\n\nReturns information and statistics about terms in the fields of a particular document."]
 pub struct Termvectors<'a, 'b, B> {
@@ -7151,10 +7526,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Termvectors] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: TermvectorsParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<TermvectorsParts<'b>>,
+    {
         Termvectors {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -7398,6 +7776,18 @@ impl<'b> UpdateParts<'b> {
         }
     }
 }
+impl<'b> From<(&'b str, &'b str)> for UpdateParts<'b> {
+    #[doc = "Builds a [UpdateParts::IndexId] for the Update API"]
+    fn from(t: (&'b str, &'b str)) -> UpdateParts<'b> {
+        UpdateParts::IndexId(t.0, t.1)
+    }
+}
+impl<'b> From<(&'b str, &'b str, &'b str)> for UpdateParts<'b> {
+    #[doc = "Builds a [UpdateParts::IndexTypeId] for the Update API"]
+    fn from(t: (&'b str, &'b str, &'b str)) -> UpdateParts<'b> {
+        UpdateParts::IndexTypeId(t.0, t.1, t.2)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Update API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-update.html)\n\nUpdates a document with a script or partial document."]
 pub struct Update<'a, 'b, B> {
@@ -7427,10 +7817,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [Update] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: UpdateParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<UpdateParts<'b>>,
+    {
         Update {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -7680,6 +8073,18 @@ impl<'b> UpdateByQueryParts<'b> {
         }
     }
 }
+impl<'b> From<&'b [&'b str]> for UpdateByQueryParts<'b> {
+    #[doc = "Builds a [UpdateByQueryParts::Index] for the Update By Query API"]
+    fn from(t: &'b [&'b str]) -> UpdateByQueryParts<'b> {
+        UpdateByQueryParts::Index(t)
+    }
+}
+impl<'b> From<(&'b [&'b str], &'b [&'b str])> for UpdateByQueryParts<'b> {
+    #[doc = "Builds a [UpdateByQueryParts::IndexType] for the Update By Query API"]
+    fn from(t: (&'b [&'b str], &'b [&'b str])) -> UpdateByQueryParts<'b> {
+        UpdateByQueryParts::IndexType(t.0, t.1)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Update By Query API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-update-by-query.html)\n\nPerforms an update on every document in the index without changing the source,\nfor example to pick up a mapping change."]
 pub struct UpdateByQuery<'a, 'b, B> {
@@ -7733,10 +8138,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [UpdateByQuery] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: UpdateByQueryParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<UpdateByQueryParts<'b>>,
+    {
         UpdateByQuery {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             _source: None,
             _source_excludes: None,
@@ -8215,6 +8623,12 @@ impl<'b> UpdateByQueryRethrottleParts<'b> {
         }
     }
 }
+impl<'b> From<&'b str> for UpdateByQueryRethrottleParts<'b> {
+    #[doc = "Builds a [UpdateByQueryRethrottleParts::TaskId] for the Update By Query Rethrottle API"]
+    fn from(t: &'b str) -> UpdateByQueryRethrottleParts<'b> {
+        UpdateByQueryRethrottleParts::TaskId(t)
+    }
+}
 #[derive(Clone, Debug)]
 #[doc = "Builder for the [Update By Query Rethrottle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-update-by-query.html)\n\nChanges the number of requests per second for a particular Update By Query operation."]
 pub struct UpdateByQueryRethrottle<'a, 'b, B> {
@@ -8234,10 +8648,13 @@ where
     B: Body,
 {
     #[doc = "Creates a new instance of [UpdateByQueryRethrottle] with the specified API parts"]
-    pub fn new(client: &'a Elasticsearch, parts: UpdateByQueryRethrottleParts<'b>) -> Self {
+    pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+    where
+        P: Into<UpdateByQueryRethrottleParts<'b>>,
+    {
         UpdateByQueryRethrottle {
             client,
-            parts,
+            parts: parts.into(),
             headers: HeaderMap::new(),
             body: None,
             error_trace: None,
@@ -8346,73 +8763,118 @@ where
 }
 impl Elasticsearch {
     #[doc = "[Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-bulk.html)\n\nAllows to perform multiple index/update/delete operations in a single request."]
-    pub fn bulk<'a, 'b>(&'a self, parts: BulkParts<'b>) -> Bulk<'a, 'b, ()> {
+    pub fn bulk<'a, 'b, P>(&'a self, parts: P) -> Bulk<'a, 'b, ()>
+    where
+        P: Into<BulkParts<'b>>,
+    {
         Bulk::new(&self, parts)
     }
     #[doc = "[Clear Scroll API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-request-body.html#_clear_scroll_api)\n\nExplicitly clears the search context for a scroll."]
-    pub fn clear_scroll<'a, 'b>(&'a self, parts: ClearScrollParts<'b>) -> ClearScroll<'a, 'b, ()> {
+    pub fn clear_scroll<'a, 'b, P>(&'a self, parts: P) -> ClearScroll<'a, 'b, ()>
+    where
+        P: Into<ClearScrollParts<'b>>,
+    {
         ClearScroll::new(&self, parts)
     }
     #[doc = "[Count API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-count.html)\n\nReturns number of documents matching a query."]
-    pub fn count<'a, 'b>(&'a self, parts: CountParts<'b>) -> Count<'a, 'b, ()> {
+    pub fn count<'a, 'b, P>(&'a self, parts: P) -> Count<'a, 'b, ()>
+    where
+        P: Into<CountParts<'b>>,
+    {
         Count::new(&self, parts)
     }
     #[doc = "[Create API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-index_.html)\n\nCreates a new document in the index.\n\nReturns a 409 response when a document with a same ID already exists in the index."]
-    pub fn create<'a, 'b>(&'a self, parts: CreateParts<'b>) -> Create<'a, 'b, ()> {
+    pub fn create<'a, 'b, P>(&'a self, parts: P) -> Create<'a, 'b, ()>
+    where
+        P: Into<CreateParts<'b>>,
+    {
         Create::new(&self, parts)
     }
     #[doc = "[Delete API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-delete.html)\n\nRemoves a document from the index."]
-    pub fn delete<'a, 'b>(&'a self, parts: DeleteParts<'b>) -> Delete<'a, 'b> {
+    pub fn delete<'a, 'b, P>(&'a self, parts: P) -> Delete<'a, 'b>
+    where
+        P: Into<DeleteParts<'b>>,
+    {
         Delete::new(&self, parts)
     }
     #[doc = "[Delete By Query API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-delete-by-query.html)\n\nDeletes documents matching the provided query."]
-    pub fn delete_by_query<'a, 'b>(
-        &'a self,
-        parts: DeleteByQueryParts<'b>,
-    ) -> DeleteByQuery<'a, 'b, ()> {
+    pub fn delete_by_query<'a, 'b, P>(&'a self, parts: P) -> DeleteByQuery<'a, 'b, ()>
+    where
+        P: Into<DeleteByQueryParts<'b>>,
+    {
         DeleteByQuery::new(&self, parts)
     }
     #[doc = "[Delete By Query Rethrottle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-delete-by-query.html)\n\nChanges the number of requests per second for a particular Delete By Query operation."]
-    pub fn delete_by_query_rethrottle<'a, 'b>(
+    pub fn delete_by_query_rethrottle<'a, 'b, P>(
         &'a self,
-        parts: DeleteByQueryRethrottleParts<'b>,
-    ) -> DeleteByQueryRethrottle<'a, 'b, ()> {
+        parts: P,
+    ) -> DeleteByQueryRethrottle<'a, 'b, ()>
+    where
+        P: Into<DeleteByQueryRethrottleParts<'b>>,
+    {
         DeleteByQueryRethrottle::new(&self, parts)
     }
     #[doc = "[Delete Script API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-scripting.html)\n\nDeletes a script."]
-    pub fn delete_script<'a, 'b>(&'a self, parts: DeleteScriptParts<'b>) -> DeleteScript<'a, 'b> {
+    pub fn delete_script<'a, 'b, P>(&'a self, parts: P) -> DeleteScript<'a, 'b>
+    where
+        P: Into<DeleteScriptParts<'b>>,
+    {
         DeleteScript::new(&self, parts)
     }
     #[doc = "[Exists API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-get.html)\n\nReturns information about whether a document exists in an index."]
-    pub fn exists<'a, 'b>(&'a self, parts: ExistsParts<'b>) -> Exists<'a, 'b> {
+    pub fn exists<'a, 'b, P>(&'a self, parts: P) -> Exists<'a, 'b>
+    where
+        P: Into<ExistsParts<'b>>,
+    {
         Exists::new(&self, parts)
     }
     #[doc = "[Exists Source API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-get.html)\n\nReturns information about whether a document source exists in an index."]
-    pub fn exists_source<'a, 'b>(&'a self, parts: ExistsSourceParts<'b>) -> ExistsSource<'a, 'b> {
+    pub fn exists_source<'a, 'b, P>(&'a self, parts: P) -> ExistsSource<'a, 'b>
+    where
+        P: Into<ExistsSourceParts<'b>>,
+    {
         ExistsSource::new(&self, parts)
     }
     #[doc = "[Explain API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-explain.html)\n\nReturns information about why a specific matches (or doesn't match) a query."]
-    pub fn explain<'a, 'b>(&'a self, parts: ExplainParts<'b>) -> Explain<'a, 'b, ()> {
+    pub fn explain<'a, 'b, P>(&'a self, parts: P) -> Explain<'a, 'b, ()>
+    where
+        P: Into<ExplainParts<'b>>,
+    {
         Explain::new(&self, parts)
     }
     #[doc = "[Field Caps API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-field-caps.html)\n\nReturns the information about the capabilities of fields among multiple indices."]
-    pub fn field_caps<'a, 'b>(&'a self, parts: FieldCapsParts<'b>) -> FieldCaps<'a, 'b, ()> {
+    pub fn field_caps<'a, 'b, P>(&'a self, parts: P) -> FieldCaps<'a, 'b, ()>
+    where
+        P: Into<FieldCapsParts<'b>>,
+    {
         FieldCaps::new(&self, parts)
     }
     #[doc = "[Get API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-get.html)\n\nReturns a document."]
-    pub fn get<'a, 'b>(&'a self, parts: GetParts<'b>) -> Get<'a, 'b> {
+    pub fn get<'a, 'b, P>(&'a self, parts: P) -> Get<'a, 'b>
+    where
+        P: Into<GetParts<'b>>,
+    {
         Get::new(&self, parts)
     }
     #[doc = "[Get Script API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-scripting.html)\n\nReturns a script."]
-    pub fn get_script<'a, 'b>(&'a self, parts: GetScriptParts<'b>) -> GetScript<'a, 'b> {
+    pub fn get_script<'a, 'b, P>(&'a self, parts: P) -> GetScript<'a, 'b>
+    where
+        P: Into<GetScriptParts<'b>>,
+    {
         GetScript::new(&self, parts)
     }
     #[doc = "[Get Source API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-get.html)\n\nReturns the source of a document."]
-    pub fn get_source<'a, 'b>(&'a self, parts: GetSourceParts<'b>) -> GetSource<'a, 'b> {
+    pub fn get_source<'a, 'b, P>(&'a self, parts: P) -> GetSource<'a, 'b>
+    where
+        P: Into<GetSourceParts<'b>>,
+    {
         GetSource::new(&self, parts)
     }
     #[doc = "[Index API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-index_.html)\n\nCreates or updates a document in an index."]
-    pub fn index<'a, 'b>(&'a self, parts: IndexParts<'b>) -> Index<'a, 'b, ()> {
+    pub fn index<'a, 'b, P>(&'a self, parts: P) -> Index<'a, 'b, ()>
+    where
+        P: Into<IndexParts<'b>>,
+    {
         Index::new(&self, parts)
     }
     #[doc = "[Info API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/index.html)\n\nReturns basic information about the cluster."]
@@ -8420,25 +8882,31 @@ impl Elasticsearch {
         Info::new(&self)
     }
     #[doc = "[Mget API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-multi-get.html)\n\nAllows to get multiple documents in one request."]
-    pub fn mget<'a, 'b>(&'a self, parts: MgetParts<'b>) -> Mget<'a, 'b, ()> {
+    pub fn mget<'a, 'b, P>(&'a self, parts: P) -> Mget<'a, 'b, ()>
+    where
+        P: Into<MgetParts<'b>>,
+    {
         Mget::new(&self, parts)
     }
     #[doc = "[Msearch API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-multi-search.html)\n\nAllows to execute several search operations in one request."]
-    pub fn msearch<'a, 'b>(&'a self, parts: MsearchParts<'b>) -> Msearch<'a, 'b, ()> {
+    pub fn msearch<'a, 'b, P>(&'a self, parts: P) -> Msearch<'a, 'b, ()>
+    where
+        P: Into<MsearchParts<'b>>,
+    {
         Msearch::new(&self, parts)
     }
     #[doc = "[Msearch Template API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-multi-search.html)\n\nAllows to execute several search template operations in one request."]
-    pub fn msearch_template<'a, 'b>(
-        &'a self,
-        parts: MsearchTemplateParts<'b>,
-    ) -> MsearchTemplate<'a, 'b, ()> {
+    pub fn msearch_template<'a, 'b, P>(&'a self, parts: P) -> MsearchTemplate<'a, 'b, ()>
+    where
+        P: Into<MsearchTemplateParts<'b>>,
+    {
         MsearchTemplate::new(&self, parts)
     }
     #[doc = "[Mtermvectors API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-multi-termvectors.html)\n\nReturns multiple termvectors in one request."]
-    pub fn mtermvectors<'a, 'b>(
-        &'a self,
-        parts: MtermvectorsParts<'b>,
-    ) -> Mtermvectors<'a, 'b, ()> {
+    pub fn mtermvectors<'a, 'b, P>(&'a self, parts: P) -> Mtermvectors<'a, 'b, ()>
+    where
+        P: Into<MtermvectorsParts<'b>>,
+    {
         Mtermvectors::new(&self, parts)
     }
     #[doc = "[Ping API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/index.html)\n\nReturns whether the cluster is running."]
@@ -8446,7 +8914,10 @@ impl Elasticsearch {
         Ping::new(&self)
     }
     #[doc = "[Put Script API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-scripting.html)\n\nCreates or updates a script."]
-    pub fn put_script<'a, 'b>(&'a self, parts: PutScriptParts<'b>) -> PutScript<'a, 'b, ()> {
+    pub fn put_script<'a, 'b, P>(&'a self, parts: P) -> PutScript<'a, 'b, ()>
+    where
+        P: Into<PutScriptParts<'b>>,
+    {
         PutScript::new(&self, parts)
     }
     #[doc = "[Reindex API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-reindex.html)\n\nAllows to copy documents from one index to another, optionally filtering the source\ndocuments by a query, changing the destination index settings, or fetching the\ndocuments from a remote cluster."]
@@ -8454,61 +8925,76 @@ impl Elasticsearch {
         Reindex::new(&self)
     }
     #[doc = "[Reindex Rethrottle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-reindex.html)\n\nChanges the number of requests per second for a particular Reindex operation."]
-    pub fn reindex_rethrottle<'a, 'b>(
-        &'a self,
-        parts: ReindexRethrottleParts<'b>,
-    ) -> ReindexRethrottle<'a, 'b, ()> {
+    pub fn reindex_rethrottle<'a, 'b, P>(&'a self, parts: P) -> ReindexRethrottle<'a, 'b, ()>
+    where
+        P: Into<ReindexRethrottleParts<'b>>,
+    {
         ReindexRethrottle::new(&self, parts)
     }
     #[doc = "[Render Search Template API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-template.html#_validating_templates)\n\nAllows to use the Mustache language to pre-render a search definition."]
-    pub fn render_search_template<'a, 'b>(
-        &'a self,
-        parts: RenderSearchTemplateParts<'b>,
-    ) -> RenderSearchTemplate<'a, 'b, ()> {
+    pub fn render_search_template<'a, 'b, P>(&'a self, parts: P) -> RenderSearchTemplate<'a, 'b, ()>
+    where
+        P: Into<RenderSearchTemplateParts<'b>>,
+    {
         RenderSearchTemplate::new(&self, parts)
     }
     #[doc = "[Scroll API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-request-body.html#request-body-search-scroll)\n\nAllows to retrieve a large numbers of results from a single search request."]
-    pub fn scroll<'a, 'b>(&'a self, parts: ScrollParts<'b>) -> Scroll<'a, 'b, ()> {
+    pub fn scroll<'a, 'b, P>(&'a self, parts: P) -> Scroll<'a, 'b, ()>
+    where
+        P: Into<ScrollParts<'b>>,
+    {
         Scroll::new(&self, parts)
     }
     #[doc = "[Search API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-search.html)\n\nReturns results matching a query."]
-    pub fn search<'a, 'b>(&'a self, parts: SearchParts<'b>) -> Search<'a, 'b, ()> {
+    pub fn search<'a, 'b, P>(&'a self, parts: P) -> Search<'a, 'b, ()>
+    where
+        P: Into<SearchParts<'b>>,
+    {
         Search::new(&self, parts)
     }
     #[doc = "[Search Shards API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-shards.html)\n\nReturns information about the indices and shards that a search request would be executed against."]
-    pub fn search_shards<'a, 'b>(
-        &'a self,
-        parts: SearchShardsParts<'b>,
-    ) -> SearchShards<'a, 'b, ()> {
+    pub fn search_shards<'a, 'b, P>(&'a self, parts: P) -> SearchShards<'a, 'b, ()>
+    where
+        P: Into<SearchShardsParts<'b>>,
+    {
         SearchShards::new(&self, parts)
     }
     #[doc = "[Search Template API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-template.html)\n\nAllows to use the Mustache language to pre-render a search definition."]
-    pub fn search_template<'a, 'b>(
-        &'a self,
-        parts: SearchTemplateParts<'b>,
-    ) -> SearchTemplate<'a, 'b, ()> {
+    pub fn search_template<'a, 'b, P>(&'a self, parts: P) -> SearchTemplate<'a, 'b, ()>
+    where
+        P: Into<SearchTemplateParts<'b>>,
+    {
         SearchTemplate::new(&self, parts)
     }
     #[doc = "[Termvectors API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-termvectors.html)\n\nReturns information and statistics about terms in the fields of a particular document."]
-    pub fn termvectors<'a, 'b>(&'a self, parts: TermvectorsParts<'b>) -> Termvectors<'a, 'b, ()> {
+    pub fn termvectors<'a, 'b, P>(&'a self, parts: P) -> Termvectors<'a, 'b, ()>
+    where
+        P: Into<TermvectorsParts<'b>>,
+    {
         Termvectors::new(&self, parts)
     }
     #[doc = "[Update API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-update.html)\n\nUpdates a document with a script or partial document."]
-    pub fn update<'a, 'b>(&'a self, parts: UpdateParts<'b>) -> Update<'a, 'b, ()> {
+    pub fn update<'a, 'b, P>(&'a self, parts: P) -> Update<'a, 'b, ()>
+    where
+        P: Into<UpdateParts<'b>>,
+    {
         Update::new(&self, parts)
     }
     #[doc = "[Update By Query API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-update-by-query.html)\n\nPerforms an update on every document in the index without changing the source,\nfor example to pick up a mapping change."]
-    pub fn update_by_query<'a, 'b>(
-        &'a self,
-        parts: UpdateByQueryParts<'b>,
-    ) -> UpdateByQuery<'a, 'b, ()> {
+    pub fn update_by_query<'a, 'b, P>(&'a self, parts: P) -> UpdateByQuery<'a, 'b, ()>
+    where
+        P: Into<UpdateByQueryParts<'b>>,
+    {
         UpdateByQuery::new(&self, parts)
     }
     #[doc = "[Update By Query Rethrottle API](https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docs-update-by-query.html)\n\nChanges the number of requests per second for a particular Update By Query operation."]
-    pub fn update_by_query_rethrottle<'a, 'b>(
+    pub fn update_by_query_rethrottle<'a, 'b, P>(
         &'a self,
-        parts: UpdateByQueryRethrottleParts<'b>,
-    ) -> UpdateByQueryRethrottle<'a, 'b, ()> {
+        parts: P,
+    ) -> UpdateByQueryRethrottle<'a, 'b, ()>
+    where
+        P: Into<UpdateByQueryRethrottleParts<'b>>,
+    {
         UpdateByQueryRethrottle::new(&self, parts)
     }
 }

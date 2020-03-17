@@ -149,7 +149,7 @@ impl<'a> RequestBuilder<'a> {
         enum_builder: &EnumBuilder,
         default_fields: &[&syn::Ident],
     ) -> Tokens {
-        let (enum_ty, _, _) = enum_builder.clone().build();
+        let (enum_ty, _, _, _) = enum_builder.clone().build();
         let default_fields = Self::create_default_fields(default_fields);
         if enum_builder.contains_single_parameterless_part() {
             let doc = doc(format!("Creates a new instance of [{}]", &builder_name));
@@ -171,10 +171,12 @@ impl<'a> RequestBuilder<'a> {
             ));
             quote!(
                 #doc
-                pub fn new(client: &'a Elasticsearch, parts: #enum_ty) -> Self {
+                pub fn new<P>(client: &'a Elasticsearch, parts: P) -> Self
+                    where P: Into<#enum_ty>
+                {
                     #builder_ident {
                         client,
-                        parts,
+                        parts: parts.into(),
                         headers: HeaderMap::new(),
                         #(#default_fields),*,
                     }
@@ -379,7 +381,7 @@ impl<'a> RequestBuilder<'a> {
 
         let supports_body = endpoint.supports_body();
         let builder_ident = ident(builder_name);
-        let (enum_ty, enum_struct, enum_impl) = enum_builder.clone().build();
+        let (enum_ty, enum_struct, enum_impl, from_impls) = enum_builder.clone().build();
 
         // collect all the fields for the builder struct. Start with url parameters
         let mut fields: Vec<Field> = endpoint
@@ -507,6 +509,8 @@ impl<'a> RequestBuilder<'a> {
 
             #enum_impl
 
+            #(#from_impls)*
+
             #[derive(Clone, Debug)]
             #[doc = #builder_doc]
             pub struct #builder_expr {
@@ -548,11 +552,15 @@ impl<'a> RequestBuilder<'a> {
             let i = ident(name);
             let b = builder_ident.clone();
 
-            match (endpoint.supports_body(), is_root_method) {
-                (true, true) => (quote!(#i<'a, 'b>), quote!(#b<'a, 'b, ()>)),
-                (false, true) => (quote!(#i<'a, 'b>), quote!(#b<'a, 'b>)),
-                (true, false) => (quote!(#i<'b>), quote!(#b<'a, 'b, ()>)),
-                (false, false) => (quote!(#i<'b>), quote!(#b<'a, 'b>)),
+            match (endpoint.supports_body(), is_root_method, enum_builder.contains_single_parameterless_part()) {
+                (true, true, true) => (quote!(#i<'a, 'b>), quote!(#b<'a, 'b, ()>)),
+                (true, true, false) => (quote!(#i<'a, 'b, P>), quote!(#b<'a, 'b, ()>)),
+                (false, true, true) => (quote!(#i<'a, 'b>), quote!(#b<'a, 'b>)),
+                (false, true, false) => (quote!(#i<'a, 'b, P>), quote!(#b<'a, 'b>)),
+                (true, false, true) => (quote!(#i<'b>), quote!(#b<'a, 'b, ()>)),
+                (true, false, false) => (quote!(#i<'b, P>), quote!(#b<'a, 'b, ()>)),
+                (false, false, true) => (quote!(#i<'b>), quote!(#b<'a, 'b>)),
+                (false, false, false) => (quote!(#i<'b, P>), quote!(#b<'a, 'b>)),
             }
         };
 
@@ -585,10 +593,12 @@ impl<'a> RequestBuilder<'a> {
                 }
             )
         } else {
-            let (enum_ty, _, _) = enum_builder.clone().build();
+            let (enum_ty, _, _, _) = enum_builder.clone().build();
             quote!(
                 #method_doc
-                pub fn #fn_name(&'a self, parts: #enum_ty) -> #builder_ident_ret {
+                pub fn #fn_name(&'a self, parts: P) -> #builder_ident_ret
+                    where P: Into<#enum_ty>
+                {
                     #builder_ident::new(#clone_expr, parts)
                 }
             )
