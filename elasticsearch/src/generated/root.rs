@@ -5893,10 +5893,7 @@ where
     #[doc = "Creates an asynchronous call to the Scroll API that can be awaited"]
     pub async fn send(self) -> Result<Response, Error> {
         let path = self.parts.url();
-        let method = match self.body {
-            Some(_) => Method::Post,
-            None => Method::Get,
-        };
+        let method = Method::Post;
         let headers = self.headers;
         let query_string = {
             #[serde_with::skip_serializing_none]
@@ -5915,10 +5912,6 @@ where
                 pretty: Option<bool>,
                 #[serde(rename = "rest_total_hits_as_int")]
                 rest_total_hits_as_int: Option<bool>,
-                #[serde(rename = "scroll")]
-                scroll: Option<&'b str>,
-                #[serde(rename = "scroll_id")]
-                scroll_id: Option<&'b str>,
                 #[serde(rename = "source")]
                 source: Option<&'b str>,
             }
@@ -5928,13 +5921,24 @@ where
                 human: self.human,
                 pretty: self.pretty,
                 rest_total_hits_as_int: self.rest_total_hits_as_int,
-                scroll: self.scroll,
-                scroll_id: self.scroll_id,
                 source: self.source,
             };
             Some(query_params)
         };
-        let body = self.body;
+
+        #[serde_with::skip_serializing_none]
+        #[derive(Serialize)]
+        struct ScrollBody<'b> {
+            #[serde(rename = "scroll")]
+            scroll: Option<&'b str>,
+            #[serde(rename = "scroll_id")]
+            scroll_id: Option<&'b str>,
+        }
+
+        let body = Some(JsonBody(ScrollBody {
+            scroll: self.scroll,
+            scroll_id: self.scroll_id,
+        }));
         let response = self
             .client
             .send(method, &path, headers, query_string.as_ref(), body)
